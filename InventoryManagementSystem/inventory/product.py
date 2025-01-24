@@ -4,7 +4,7 @@ class Product:
         self.category = category
         self.price = price
         self.quantity = quantity
-'''
+    '''
     #decorator
     def check_product_exists(func):
         def inner(self, name, *args, **kwargs):
@@ -14,7 +14,7 @@ class Product:
                 return None
             return func(self, name, *args, **kwargs)
         return inner
-        '''
+    '''
 
     
     def get_product_info(self):
