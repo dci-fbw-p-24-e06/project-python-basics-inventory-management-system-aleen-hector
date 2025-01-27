@@ -36,48 +36,14 @@ class InventoryManager:
                 return None
             return func(self, name, *args, **kwargs)
         return inner
-
-    def add_product(self):
-        """
-        Add a product to the inventory.
-        
-        Parameters:
-        product (Product): The Product object to add.
-        """
-        name: str = input("Name of the product:")
-        if self.find_product(name):
-            return f"Product already exists"
-        category: str = input("Category name:")
-        price = get_valid_input("Enter a price: ", "float")
-        price = float(price)
-        quantity = get_valid_input("Enter the quantity: ", "int")
-        quantity = int(quantity)
-        product = Product(name, category, price, quantity)
-        self.products.append(product)
-        return f"{product.name} added succesfully"
-    def delete_product(self, name):
-        """
-        Delete a product from the inventory by name.
-        
-        Returns:
-        list: The updated list of products, or None if the product was not found.
-        """
-        product = self.find_product(name)
-        if not product:
-            print("Product not found")
-            return None
-        else:
-            print(f"Product {product.name} found and deleted from inventory")
-            self.products.remove(product)
-            return self.products
-        
+     
     '''
     print the inventory with product information
     '''
     def show_inventory(self):
         if self.products:
             for product in self.products:
-                print(product.get_product_info())
+                print(product.print_product_info())
         else:
             print("Inventory is empty")
     def product_summary_category(self, category):
