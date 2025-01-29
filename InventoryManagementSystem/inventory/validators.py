@@ -1,4 +1,5 @@
-
+from .menus import show_main_menu
+import colors
 
 def number_validation(input_string: str, input_type: str):
     """
@@ -36,3 +37,11 @@ def get_valid_input(prompt: str, input_type: str):
         value = input(prompt)
         if number_validation(value, input_type):
             return value
+        
+def show_input(value: str, option:int ) -> str:
+    menu_lines = show_main_menu().split('\n')
+    print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
+    print(menu_lines[option+3])
+    print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
+    type: str = input(f'Write the name of {value}: ')
+    return type

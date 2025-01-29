@@ -1,10 +1,10 @@
 from .validators import get_valid_input
 class Product:
     def __init__(self,name: str, category: str, price: float, quantity: int):
-        self.name = name
-        self.category = category
-        self.price = price
-        self.quantity = quantity
+        self.name: str = name
+        self.category: str = category
+        self.price: float = price
+        self.quantity: float = quantity
     '''
     #decorator
     def check_product_exists(func):
@@ -16,40 +16,39 @@ class Product:
             return func(self, name, *args, **kwargs)
         return inner
     '''
-    @staticmethod
-    def add_product(inventory, name: str):
+    def add_product(self, name: str):
         """
         Add a product to the inventory.
         
         Parameters:
         product (Product): The Product object to add.
         """
-        if inventory.find_product(name):
-            return f"Product already exists"
+        if self.find_product(name):
+            return print("Product already exists")
         category: str = input("Category name:")
-        price = get_valid_input("Enter a price: ", "float")
+        price  = get_valid_input("Enter a price: ", "float")
         price = float(price)
-        quantity = get_valid_input("Enter the quantity: ", "int")
+        quantity  = get_valid_input("Enter the quantity: ", "int")
         quantity = int(quantity)
         product = Product(name, category, price, quantity)
-        inventory.products.append(product)
+        self.products.append(product)
         print(f"{product.name} added succesfully")
-        return inventory
-    @staticmethod
-    def delete_product(inventory, name):
+        return self
+    
+    def delete_product(self, name):
         """
         Delete a product from the inventory by name.
         
         Returns:
         list: The updated list of products, or None if the product was not found.
         """
-        product = inventory.find_product(name)
+        product = self.find_product(name)
         if not product:
             print("Product not found")
             return None
         print(f"Product {product.name} found and deleted from inventory")
-        inventory.products.remove(product)
-        return inventory
+        self.products.remove(product)
+        return self
     
     def print_product_info(self):
         '''
@@ -63,18 +62,17 @@ class Product:
         )
         return product_info
    
-    @staticmethod
-    def get_product_info(inventory, name: str):
+    def get_product_info(self, name: str):
         '''
         Print information of a product.
         
         Parameters:
         name (str): The name of the product to get information for.
         '''
-        if not inventory.products:
+        if not self.products:
             print("Inventory is empty")
             return None
-        product = inventory.find_product(name)
+        product = self.find_product(name)
         if not product:
             print("Product not found")
             return None
@@ -105,15 +103,15 @@ class Product:
         self.quantity = quantity
         return f"Quantity of {self.name} updated to {self.quantity}"
     #@check_product_exists
-    def total_product_value(inventory, name):
+    def total_product_value(self, name):
         '''
         get the total value of a product multiplying the price per quantity
         '''
-        product = inventory.find_product(name)
+        product = self.find_product(name)
         if not product:
             print("Product not found")
             return None
         total_value: float = product.price * product.quantity
-        return f"The total value of {product.name} is: {total_value} euros"
+        return print(f"The total value of {product.name} is: {total_value} euros")
     
 

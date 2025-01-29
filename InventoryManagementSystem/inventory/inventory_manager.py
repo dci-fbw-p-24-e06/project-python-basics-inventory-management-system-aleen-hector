@@ -27,7 +27,14 @@ class InventoryManager:
                 return product
         return None
     
-    #decorator
+    def is_inventory_empty(func):
+        def inner(self, *args, **kwargs):
+            if not self.products:
+                print("Inventory is empty")
+                return None
+            return func(self, *args, **kwargs)
+        return inner
+    """#decorator
     def check_product_exists(func):
         def inner(self, name, *args, **kwargs):
             product = func.find_product(name)
@@ -36,16 +43,15 @@ class InventoryManager:
                 return None
             return func(self, name, *args, **kwargs)
         return inner
-     
-    '''
-    print the inventory with product information
-    '''
+     """
+    @is_inventory_empty
     def show_inventory(self):
-        if self.products:
-            for product in self.products:
-                print(product.print_product_info())
-        else:
-            print("Inventory is empty")
+        '''
+        print the inventory with product information
+        '''
+        for product in self.products:
+            print(product.print_product_info())
+    @is_inventory_empty
     def product_summary_category(self, category):
         list_products = []
         for product in self.products:
@@ -81,17 +87,3 @@ class InventoryManager:
             print(f"Inventory loaded from {filename}")
         except FileNotFoundError:
             print(f"No such file: {filename}")
-
-'''
-# Example usage
-water = Product("Water", "Drink", 0.5, 100)
-milk = Product("milk", "Drink", 1.1, 20)
-
-inventory_manager = InventoryManager([water, milk])
-
-inventory_manager.add_product(Product("Banane", "Fruit",0.2, 15))
-inventory_manager.get_products_info()
-inventory_manager.delete_product("Banane")
-
-inventory_manager.get_products_info()
-print(water.total_product_value())'''

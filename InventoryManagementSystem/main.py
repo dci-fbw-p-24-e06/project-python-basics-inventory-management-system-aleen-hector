@@ -1,29 +1,9 @@
 from inventory.inventory_manager import InventoryManager
 from inventory.product import Product
-from inventory.validators import get_valid_input
-def show_menu():
-    """ 
-    Display the menu options to the user. 
+from inventory.validators import get_valid_input, show_input
+from inventory.menus import show_main_menu, show_products_menu
 
-    Prints a list of task options that the user can choose from. 
-    """
-    menu = ( 
-            "==================================================\n" 
-            "===        INVENTORY MANAGING SYSTEM        ===\n"
-            "==================================================\n" 
-            " Please choose one of the following tasks:\n"
-            " 1.    Add product \n" 
-            " 2.    Remove product \n" 
-            " 3.    See product information \n"
-            " 4.    See inventory \n"
-            " 5.    Total Product Value \n"
-            " 6.    See products by category \n"
-            " 18.    Save inventory to JSON \n"
-            " 19.    Load inventory from JSON \n"
-            " 20.   Exit\n"
-            "==================================================\n"
-    ) 
-    print(menu)
+show_main_menu()
 
 def main():
     """ 
@@ -37,7 +17,7 @@ def main():
     """
     inventory = InventoryManager()
     while True:
-        show_menu()
+        print(show_main_menu())
         # Validate if the input is an integer 
         chosen_number = get_valid_input("What you want to do? ", "int")
         
@@ -45,15 +25,15 @@ def main():
         chosen_number = int(chosen_number) 
 
         if chosen_number == 1:
-            name: str = input("Name of the product: ")
-            print(Product.add_product(inventory, name))
+            name: str = show_input("Product",1)
+            Product.add_product(inventory, name)
             keepOn()
         elif chosen_number == 2:
-            name: str = input("Name of the product: ")
+            name: str = show_input("Product",2)
             Product.delete_product(inventory, name)
             keepOn()
         elif chosen_number == 3:
-            name: str = input("Name of the product: ")
+            name: str = show_input("Product",3)
             product_info = Product.get_product_info(inventory, name)
             if product_info:
                 print(product_info)
@@ -65,12 +45,58 @@ def main():
             keepOn()
         elif chosen_number == 5:
             name: str = input("Name of the product:")
-            print(Product.total_product_value(inventory, name))
+            Product.total_product_value(inventory, name)
             keepOn()
-        elif chosen_number == 5:
+        elif chosen_number == 6:
+            category: str = show_input("Category")
+            InventoryManager.product_summary_category(inventory, category)
+            keepOn()
+        elif chosen_number == 6:
             category: str = input("For wich category you want to see the products:")
             InventoryManager.product_summary_category(inventory, category)
             keepOn()
+        elif chosen_number == 17:
+            print(show_products_menu())
+            # Validate if the input is an integer 
+            chosen_number = get_valid_input("What you want to do? ", "int")
+            
+            # Proceed with the task selection
+            chosen_number = int(chosen_number) 
+
+            if chosen_number == 1:
+                name: str = show_input("Product",1)
+                Product.add_product(inventory, name)
+                keepOn()
+            elif chosen_number == 2:
+                name: str = show_input("Product",2)
+                Product.delete_product(inventory, name)
+                keepOn()
+            elif chosen_number == 3:
+                name: str = show_input("Product",3)
+                product_info = Product.get_product_info(inventory, name)
+                if product_info:
+                    print(product_info)
+                keepOn()    
+            elif chosen_number == 4:
+                print("Inventory list:")
+                print("*"*20)
+                inventory.show_inventory()
+                keepOn()
+            elif chosen_number == 5:
+                name: str = input("Name of the product:")
+                Product.total_product_value(inventory, name)
+                keepOn()
+            elif chosen_number == 6:
+                category: str = show_input("Category")
+                InventoryManager.product_summary_category(inventory, category)
+                keepOn()
+            elif chosen_number == 6:
+                category: str = input("For wich category you want to see the products:")
+                InventoryManager.product_summary_category(inventory, category)
+                keepOn()
+            elif chosen_number == 17:
+                print(show_products_menu())
+                keepOn()
         elif chosen_number == 18:
             filename = input("Enter the filename to save the inventory (e.g., inventory.json): ")
             inventory.save_to_json(filename)
@@ -91,7 +117,7 @@ def keepOn():
     Prompts the user to press Enter to continue. 
     """ 
     input("\nPress Enter to continue...")
-
+ 
 
 #run the programm
 main()
