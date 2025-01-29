@@ -89,19 +89,35 @@ class Product:
             "quantity": self.quantity
         }
     
-    def update_price(self,price: float):
+    def update_price(self,name: str, price: float):
         '''
         update the price
         '''
-        self.price = price
-        return "price of {self.name} updated to {self.price}"
+        if not self.products:
+            print("Inventory is empty")
+            return None
+        product = self.find_product(name)
+        if not product:
+            print("Product not found")
+            return None
+        product.price = price
+        print(f"price of {name} updated to {product.price}")
+        return self
     
-    def update_quantity(self,quantity: int):
+    def update_quantity(self,name:str, quantity:int):
         '''
         update quantity
         '''
-        self.quantity = quantity
-        return f"Quantity of {self.name} updated to {self.quantity}"
+        if not self.products:
+            print("Inventory is empty")
+            return None
+        product = self.find_product(name)
+        if not product:
+            print("Product not found")
+            return None
+        product.quantity = quantity
+        print(f"Quantity of {name} updated to {product.quantity}")
+        return self
     #@check_product_exists
     def total_product_value(self, name):
         '''

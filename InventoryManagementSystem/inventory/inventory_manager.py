@@ -62,6 +62,15 @@ class InventoryManager:
         else:
             print(", ".join(list_products))
     
+    def total_inventory_value(self):
+        if self is None:
+            print("inventory is empty")
+            return None
+        total_value = sum(product.price * product.quantity for product in self.products)
+        print(f"Total inventory value = {total_value} €")
+        return self
+        
+
     def save_to_json(self, filename):
         """
         Save the inventory data to a JSON file.
