@@ -127,7 +127,7 @@ class Product:
         if not product:
             print("Product not found")
             return None
-        total_value: float = product.price * product.quantity
+        total_value: float = float(product.price) * int(product.quantity)
         return print(f"The total value of {product.name} is: {total_value} euros")
     
 

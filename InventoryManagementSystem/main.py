@@ -1,7 +1,7 @@
 from inventory.inventory_manager import InventoryManager
-from inventory.menus import show_main_menu, run_main_menu
+from inventory.menus import Menu
 
-show_main_menu()
+
 
 def main():
     """ 
@@ -14,7 +14,8 @@ def main():
     The loop continues until the user chooses to exit. 
     """
     inventory = InventoryManager()
-    run_main_menu(inventory)
+    menu = Menu()
+    menu.run_main_menu(inventory)
 
 #run the programm
 main()
