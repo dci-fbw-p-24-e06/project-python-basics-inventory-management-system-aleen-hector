@@ -38,6 +38,21 @@ def get_valid_input(prompt: str, input_type: str):
             return value
         
 def show_input(value: str, option:int, func) -> str:
+    """
+    Display a specific menu option and prompt the user for input.
+
+    Splits the menu string provided by the `func` parameter into lines and prints
+    the menu line specified by the `option` parameter.
+    Prompts the user to write the name of the specified `value`.
+
+    Parameters:
+    value (str): The name of the value for which input is requested.
+    option (int): The line number in the menu to display.
+    func: A function that returns the menu string.
+
+    Returns:
+    str: The user input value.
+    """
     menu_lines = func.split('\n')
     print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
     print(menu_lines[option+3])

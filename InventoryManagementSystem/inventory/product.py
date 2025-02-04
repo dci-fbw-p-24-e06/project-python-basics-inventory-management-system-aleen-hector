@@ -1,21 +1,33 @@
 from .validators import get_valid_input
+import colors
 class Product:
     def __init__(self,name: str, category: str, price: float, quantity: int):
         self.name: str = name
         self.category: str = category
         self.price: float = price
         self.quantity: float = quantity
-    '''
-    #decorator
+    
     def check_product_exists(func):
+        """
+        Decorator to check if a product exists in the inventory.
+
+        If the specified product is not found in the inventory, it prints "Product not found"
+        and returns None. Otherwise, it calls the decorated function.
+
+        Parameters:
+        func: The function to be decorated.
+
+        Returns:
+        inner: The decorated function.
+        """
         def inner(self, name, *args, **kwargs):
-            product = find_product(name)
+            product = self.find_product(name)
             if not product:
                 print("Product not found")
                 return None
             return func(self, name, *args, **kwargs)
         return inner
-    '''
+    
     def add_product(self, name: str):
         """
         Add a product to the inventory.
@@ -35,6 +47,7 @@ class Product:
         print(f"{product.name} added succesfully")
         return self
     
+    @check_product_exists
     def delete_product(self, name):
         """
         Delete a product from the inventory by name.
@@ -43,25 +56,24 @@ class Product:
         list: The updated list of products, or None if the product was not found.
         """
         product = self.find_product(name)
-        if not product:
-            print("Product not found")
-            return None
         print(f"Product {product.name} found and deleted from inventory")
         self.products.remove(product)
         return self
     
     def print_product_info(self):
-        '''
-        Print information of a product.
-        '''
-        product_info = (
-            f"Name: {self.name}, "
-            f"Category: {self.category}, "
-            f"Price: {self.price}, "
-            f"Quantity: {self.quantity}"
-        )
+        """
+        Return a dictionary of the object's attributes and values.
+        
+        This method creates a string (product_info) with each key-value pair formatted with color 
+        for the key and left-aligned value minimum width of 12 characters, separated by spaces.
+        
+        Returns:
+            str: A formatted string containing the object's attributes and values.
+        """
+        #self.__dict__ return a dictionary of the object's attributes and values
+        product_info = ' '.join([f"{colors.ANSI_CYAN + key.capitalize() + colors.ANSI_RESET}: {value:<12}" for key, value in self.__dict__.items()])
         return product_info
-   
+
     def get_product_info(self, name: str):
         '''
         Print information of a product.
@@ -80,14 +92,9 @@ class Product:
     
     def to_dict(self):
         '''
-        convert a product class object into a dict
+        convert ANY class object into a dict
         '''
-        return {
-            "name": self.name,
-            "category": self.category,
-            "price": self.price,
-            "quantity": self.quantity
-        }
+        return {key: value for key, value in self.__dict__.items()}
     
     def update_price(self,name: str, price: float):
         '''

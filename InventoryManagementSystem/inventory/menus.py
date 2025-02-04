@@ -27,7 +27,7 @@ class Menu:
 
     def create_product_menu(self):
         """ 
-        Display the menu options to the user. 
+        Display the product menu options to the user. 
 
         Prints a list of task options that the user can choose from. 
         """
@@ -48,14 +48,20 @@ class Menu:
         return product_menu
 
     def create_inventory_menu(self):
+        """ 
+        Display the inventory menu options to the user. 
+
+        Prints a list of task options that the user can choose from. 
+        """
         inventory_menu = ( 
         "==================================================\n"
         f"===        {colors.ANSI_BOLD}{colors.ANSI_GREEN}INVENTORY MANAGEMENT{colors.ANSI_RESET}      ===\n"
         "==================================================\n"
         f" {colors.ANSI_ITALIC}Please choose one of the following tasks:{colors.ANSI_RESET}\n"
         f" 1.    {colors.ANSI_UNDERLINE}Show inventory{colors.ANSI_RESET} \n"
-        f" 2.    {colors.ANSI_UNDERLINE}Search products by category{colors.ANSI_RESET} \n"
+        f" 2.    {colors.ANSI_UNDERLINE}Show products by category{colors.ANSI_RESET} \n"
         f" 3.    {colors.ANSI_UNDERLINE}Calculate the total inventory value{colors.ANSI_RESET} \n"
+        f" 4.    {colors.ANSI_UNDERLINE}Sort the inventory{colors.ANSI_RESET} \n"
         f" 10.   {colors.ANSI_UNDERLINE}Save actual inventory to JSON{colors.ANSI_RESET} \n"
         f" 11.   {colors.ANSI_UNDERLINE}Load inventory from JSON{colors.ANSI_RESET} \n"
         f" 12.   {colors.ANSI_UNDERLINE}Go back{colors.ANSI_RESET}\n"
@@ -63,13 +69,40 @@ class Menu:
         )
         return inventory_menu
     def show_main_menu(self):
+        """ 
+        Show the main menu to the user.
+
+        Returns the main menu string.
+        """
         return self.main_menu
     def show_product_menu(self):
+        """ 
+        Show the product menu to the user.
+
+        Returns the main menu string.
+        """
         return self.product_menu
     def show_inventory_menu(self):
+        """ 
+        Show the inventory menu to the user.
+
+        Returns the main menu string.
+        """
         return self.inventory_menu
 
     def run_main_menu(self, inventory):
+        """
+        Display the main menu, validate user input, and execute corresponding tasks.
+
+        Continuously displays the main menu to the user and processes their input to
+        execute the corresponding tasks. Validates that the user input is an integer
+        and calls the appropriate functions based on the chosen task number. The loop 
+        continues until the user chooses to exit.
+
+        Parameters:
+        self: The instance of the Menu class.
+        inventory: An instance of the InventoryManager class.
+        """
         while True:
             print(self.show_main_menu())
             # Validate if the input is an integer 
@@ -81,11 +114,11 @@ class Menu:
             if chosen_number == 1:
                 print(self.show_product_menu())
                 run_product_menu(self, inventory)
-                keepOn()
+                keep_on()
             elif chosen_number == 2:
                 print(self.show_inventory_menu())
                 run_inventory_menu(self, inventory)
-                keepOn()    
+                keep_on()    
             elif chosen_number == 3:
                 print("See you next time")
                 exit()
@@ -103,34 +136,34 @@ def run_product_menu(self, inventory):
         if chosen_number == 1:
             name: str = show_input("Product",1, self.show_product_menu())
             Product.add_product(inventory, name)
-            keepOn()
+            keep_on()
         elif chosen_number == 2:
             name: str = show_input("Product",2, self.show_product_menu())
             Product.delete_product(inventory, name)
-            keepOn()
+            keep_on()
         elif chosen_number == 3:
             name: str = show_input("Product",3, self.show_product_menu())
             product_info = Product.get_product_info(inventory, name)
             if product_info:
                 print(product_info)
-            keepOn()    
+            keep_on()    
         elif chosen_number == 4:
             name: str = show_input("Product",4,self.show_product_menu())
             Product.total_product_value(inventory, name)
-            keepOn()
+            keep_on()
         elif chosen_number == 5:
             name: str = show_input("Product",5,self.show_product_menu())
-            price: float = float(input("new price: "))
+            price: float = get_valid_input("New price ", "float")
             Product.update_price(inventory, name, price)
-            keepOn()
+            keep_on()
         elif chosen_number == 6:
             name: str = show_input("Product",6,self.show_product_menu())
-            price: float = input("new Quantity: ")
+            price: float = get_valid_input("New Quantity: ", "int")
             Product.update_quantity(inventory, name, price)
-            keepOn()
+            keep_on()
         elif chosen_number == 7:
             print(self.run_main_menu(inventory))
-            keepOn()
+            keep_on()
         else:
             print("this option doesn't exist, try again")
 
@@ -144,34 +177,77 @@ def run_inventory_menu(self,inventory):
         chosen_number = int(chosen_number) 
     
         if chosen_number == 1:
-            print("Inventory list:")
-            print("*"*20)
+            """
+            because show_inventory() don't need an input we can't use show_input() to print a title
+            we have to hardcode a Title 'Inventory list:'
+            """
+            print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
+            print(colors.ANSI_UNDERLINE + "Inventory list:" + colors.ANSI_RESET)
+            print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
             InventoryManager.show_inventory(inventory)
-            keepOn()
+            keep_on()
         elif chosen_number == 2:
             category: str = show_input("Category",2, self.show_inventory_menu())
             InventoryManager.product_summary_category(inventory, category)
-            keepOn()
+            keep_on()
         elif chosen_number == 3:
-            print("Total inventory value:")
-            print("*"*20)
+            """
+            because total_inventory_value() don't need an input we can't use show_input() to print a title
+            we have to hardcode a Title 'Inventory list:'
+            """
+            print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
+            print(colors.ANSI_UNDERLINE + "Total inventory value:" + colors.ANSI_RESET)
+            print(colors.ANSI_BLUE + "-"*20 + colors.ANSI_RESET)
             InventoryManager.total_inventory_value(inventory)
-            keepOn()
+            keep_on()
+        elif chosen_number == 4:
+            print(
+                f'1. Sort by Name\n'
+                f'2. Sort by Category\n'
+                f'3. Sort by Price\n'
+                f'4. Sort by Quantity\n'
+
+            )
+            option = get_valid_input("How do you want to sort? ", "int")
+            option = int(option)
+            if option == 1:
+                sorted_inventory = InventoryManager.sort_by_attr(inventory,"name")
+                InventoryManager.show_inventory(sorted_inventory)
+            elif option == 2:
+                sorted_inventory = InventoryManager.sort_by_attr(inventory,"category")
+                InventoryManager.show_inventory(sorted_inventory)
+            elif option == 3:
+                sorted_inventory = InventoryManager.sort_by_attr(inventory,"price")
+                InventoryManager.show_inventory(sorted_inventory)
+            elif option == 4:
+                sorted_inventory = InventoryManager.sort_by_attr(inventory,"quantity")
+                InventoryManager.show_inventory(sorted_inventory)
+            else:
+                print("this option doesn't exist, try again")
+            keep_on()
+            print(run_inventory_menu(self,inventory)) 
+
         elif chosen_number == 10:
-            file = show_input("File", 4, self.show_inventory_menu())
-            InventoryManager.save_to_json(inventory, file)
-            keepOn()
-        elif chosen_number == 11:
             file = show_input("File", 5, self.show_inventory_menu())
+            InventoryManager.save_to_json(inventory, file)
+            keep_on()
+        elif chosen_number == 11:
+            file = show_input("File", 6, self.show_inventory_menu())
             InventoryManager.load_from_json(inventory,file)
-            keepOn()
+            keep_on()
         elif chosen_number == 12:
             print(self.run_main_menu(inventory))
-            keepOn()            
+            keep_on()   
+        elif chosen_number == 13:
+            InventoryManager.show_graph_product_value(inventory)
+            keep_on()   
+        elif chosen_number == 14:
+            InventoryManager.show_pie_graph_products(inventory)
+            keep_on()       
         else:
             print("this option doesn't exist, try again")
 
-def keepOn(): 
+def keep_on(): 
     """ 
     Pause the program to wait for user input to continue. 
     Prompts the user to press Enter to continue. 
