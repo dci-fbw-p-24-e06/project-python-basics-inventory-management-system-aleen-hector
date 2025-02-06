@@ -1,6 +1,7 @@
 import colors
 from inventory.inventory_manager import InventoryManager
 from inventory.product import Product
+from inventory.products_manager import ProductManager
 from inventory.validators import get_valid_input, show_input
 class Menu:
     def __init__(self):
@@ -135,31 +136,31 @@ def run_product_menu(self, inventory):
 
         if chosen_number == 1:
             name: str = show_input("Product",1, self.show_product_menu())
-            Product.add_product(inventory, name)
+            ProductManager.add_product(inventory, name)
             keep_on()
         elif chosen_number == 2:
             name: str = show_input("Product",2, self.show_product_menu())
-            Product.delete_product(inventory, name)
+            ProductManager.delete_product(inventory, name)
             keep_on()
         elif chosen_number == 3:
             name: str = show_input("Product",3, self.show_product_menu())
-            product_info = Product.get_product_info(inventory, name)
+            product_info = ProductManager.get_product_info(inventory, name)
             if product_info:
                 print(product_info)
             keep_on()    
         elif chosen_number == 4:
             name: str = show_input("Product",4,self.show_product_menu())
-            Product.total_product_value(inventory, name)
+            ProductManager.total_product_value(inventory, name)
             keep_on()
         elif chosen_number == 5:
             name: str = show_input("Product",5,self.show_product_menu())
             price: float = get_valid_input("New price ", "float")
-            Product.update_price(inventory, name, price)
+            ProductManager.update_price(inventory, name, price)
             keep_on()
         elif chosen_number == 6:
             name: str = show_input("Product",6,self.show_product_menu())
             price: float = get_valid_input("New Quantity: ", "int")
-            Product.update_quantity(inventory, name, price)
+            ProductManager.update_quantity(inventory, name, price)
             keep_on()
         elif chosen_number == 7:
             print(self.run_main_menu(inventory))

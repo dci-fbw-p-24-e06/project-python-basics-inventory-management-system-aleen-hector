@@ -1,12 +1,17 @@
+from inventory.product import Product, Electronic, Vegetable, Fruit
 from .validators import get_valid_input
 import colors
-class Product:
-    def __init__(self,name: str, category: str, price: float, quantity: int):
-        self.name: str = name
-        self.category: str = category
-        self.price: float = price
-        self.quantity: float = quantity
-    
+
+def get_subclasses(cls):
+    subclasses = cls.__subclasses__()
+    list_subclasses = []
+    for subclass in subclasses:
+        subclasses.extend(get_subclasses(subclass))
+        list_subclasses.append(subclass.__name__)
+    return list_subclasses
+
+class ProductManager:
+
     def check_product_exists(func):
         """
         Decorator to check if a product exists in the inventory.
@@ -37,15 +42,53 @@ class Product:
         """
         if self.find_product(name):
             return print("Product already exists")
-        category: str = input("Category name:")
+        all_subclasses = get_subclasses(Product)
+        while True:
+            category: str = input(f"Category name ({get_subclasses(Product)}) : ")
+            if category not in all_subclasses:
+                print("Category doesn't exist, try again")
+            else:
+                break
         price  = get_valid_input("Enter a price: ", "float")
         price = float(price)
         quantity  = get_valid_input("Enter the quantity: ", "int")
         quantity = int(quantity)
-        product = Product(name, category, price, quantity)
+        if category == "Electronic":
+            brand = input("Enter a brand:")
+            warranty_period = get_valid_input("Enter a warranty period (in months): ", "int")
+            warranty_period = int(warranty_period)
+            product = Electronic(name, category, price, quantity, brand, warranty_period)
+        elif category == "Vegetable":
+            expiry_date = input("Enter expiry date (format mm/yyyy): ")
+            product = Vegetable(name, category, price, quantity, expiry_date)
+        elif category == "Fruit":
+            season = input("Enter the season: ")
+            product = Fruit(name, category, price, quantity, season)
         self.products.append(product)
         print(f"{product.name} added succesfully")
         return self
+
+    def check_product_exists(func):
+        """
+        Decorator to check if a product exists in the inventory.
+
+        If the specified product is not found in the inventory, it prints "Product not found"
+        and returns None. Otherwise, it calls the decorated function.
+
+        Parameters:
+        func: The function to be decorated.
+
+        Returns:
+        inner: The decorated function.
+        """
+        def inner(self, name, *args, **kwargs):
+            product = self.find_product(name)
+            if not product:
+                print("Product not found")
+                return None
+            return func(self, name, *args, **kwargs)
+        return inner
+    
     
     @check_product_exists
     def delete_product(self, name):
@@ -59,7 +102,7 @@ class Product:
         print(f"Product {product.name} found and deleted from inventory")
         self.products.remove(product)
         return self
-    
+
     def print_product_info(self):
         """
         Return a dictionary of the object's attributes and values.
@@ -136,22 +179,3 @@ class Product:
             return None
         total_value: float = float(product.price) * int(product.quantity)
         return print(f"The total value of {product.name} is: {total_value} euros")
-    
-class Vegetable(Product):
-    def __init__(self, name, category, price, quantity, expiry_date: str):
-        super().__init__(name, category, price, quantity)
-        self. expiry_date = expiry_date
-
-class Fruit(Product):
-    def __init__(self, name, category, price, quantity, season):
-        super().__init__(name, category, price, quantity)
-        self.season = season
-
-class Electronic(Product):
-    def __init__(self, name, category, price, quantity, brand: str, warranty_period: int):
-        super().__init__(name, category, price, quantity)
-        self.brand = brand
-        self.warranty_period = warranty_period
-
-    
-
