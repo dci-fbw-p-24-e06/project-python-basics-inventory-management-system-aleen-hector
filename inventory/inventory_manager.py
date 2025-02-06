@@ -18,6 +18,25 @@ class InventoryManager:
             raise ValueError(f'Product {name} does not exist')
         self.products[name].quantity = new_quantity
 
+    def update_price(self, name, new_price):
+        if name not in self.products:
+            raise ValueError(f'Product {name} does not exist')
+        self.products[name].price = new_price
+
+    def decrease_quantity(self, name, quantity):
+        if name not in self.products:
+            raise ValueError(f'Product {name} does not exist')
+        self.products[name].decrease_quantity(quantity)
+
+        # add a check to prevent negative stock levels
+        if self.products[name].quantity < 0:
+            raise ValueError(f'Cannot decrease quantity beyond stock for product {name}')
+        return self.products[name].quantity
+    
+    
+
+    
+
     def retrieve_product_information(self, name):
         if name not in self.products:
             raise ValueError(f'Product {name} does not exist')
