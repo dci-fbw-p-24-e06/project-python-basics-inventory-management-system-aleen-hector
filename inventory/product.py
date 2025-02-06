@@ -13,16 +13,18 @@ class Product:
         return self.price
     
     def decrease_quantity(self, quantity):
-        if self.quantity - quantity < 0:
-            raise ValueError(f'Cannot decrease quantity beyond stock for product {self.name}')
-        self.quantity -= quantity
+        try:
+            if self.quantity - quantity < 0:
+                raise ValueError(f'Cannot decrease quantity beyond stock for product {self.name}')
+            self.quantity -= quantity
+        except ValueError as e:
+            print(e)
+            self.quantity = 0
         return self.quantity
-        
-    
+
     
     def calculate_total_value(self):
         return self.price * self.quantity
-    
     
     def get_product_info(self):
         return f'Product: {self.name}, Price: {self.price} €, Quantity: {self.quantity}'
