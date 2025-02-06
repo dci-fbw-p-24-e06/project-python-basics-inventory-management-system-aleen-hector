@@ -33,11 +33,25 @@ class InventoryManager:
         if name not in self.products:
             raise ValueError(f'Product {name} does not exist')
         return self.products[name].get_product_info()
+           
+    def inventory_info(self, product_name):
+        if product_name not in self.products:
+            print(f'Product {product_name} does not exist in the inventory')
+            return  
+        self.products[product_name].get_product_info()
+        if self.products[product_name].quantity == 5:
+            print(f'Remaining quantity {product_name} is low on stock!. Current stock: {self.products[product_name].quantity}')
+        elif self.products[product_name].quantity == 0:
+            print(f'The {product_name} is out of stock!')
+          
     def get_total_inventory_value(self):
         total_value = 0
         for product in self.products.values():
             total_value += product.calculate_total_value()
         return total_value
+    
+    def get_product(self, product_name):
+        return self.products.get(product_name)
 
     
     def inventory_value(self):

@@ -4,6 +4,9 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    def __str__(self):
+        return f'Product: {self.name}, Price: {self.price} €, Quantity: {self.quantity}'
+
     def update_quantity(self, new_quantity):
         self.quantity = new_quantity
         return self.quantity
