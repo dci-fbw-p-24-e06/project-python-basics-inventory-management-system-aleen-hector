@@ -1,4 +1,4 @@
-from .product import Product
+from .product import Product, Electronic, Vegetable, Fruit
 import json
 import matplotlib.pyplot as plt
 import numpy as np
@@ -118,6 +118,32 @@ class InventoryManager:
     def load_from_json(self, filename):
         """
         Load the inventory data from a JSON file.
+        In this method, product_class_mapping map the category names to their corresponding classes in a dictionary. 
+        This allows the method to create instances of the correct subclass based on the category field in the JSON data.
+        
+        Parameters:
+        filename (str): The name of the file to load the inventory data from.
+        """
+        product_class_mapping = {
+            'Fruit': Fruit,
+            'Vegetable': Vegetable,
+            'Electronic': Electronic
+        }
+        
+        try:
+            with open(filename, 'r') as file:
+                products_data = json.load(file)
+                self.products = []
+                for data in products_data:
+                    category = data['category']
+                    product_class = product_class_mapping.get(category, Product)
+                    self.products.append(product_class(**data))
+            print(f"Inventory loaded from {filename}")
+        except FileNotFoundError:
+            print(f"No such file: {filename}")
+    '''def load_from_json(self, filename):
+        """
+        Load the inventory data from a JSON file.
         
         Parameters:
         filename (str): The name of the file to load the inventory data from.
@@ -129,6 +155,7 @@ class InventoryManager:
             print(f"Inventory loaded from {filename}")
         except FileNotFoundError:
             print(f"No such file: {filename}")
+    '''
 
     
     def sort_by_attr(self, attr):

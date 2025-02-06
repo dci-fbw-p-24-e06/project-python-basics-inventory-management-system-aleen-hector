@@ -103,20 +103,6 @@ class ProductManager:
         self.products.remove(product)
         return self
 
-    def print_product_info(self):
-        """
-        Return a dictionary of the object's attributes and values.
-        
-        This method creates a string (product_info) with each key-value pair formatted with color 
-        for the key and left-aligned value minimum width of 12 characters, separated by spaces.
-        
-        Returns:
-            str: A formatted string containing the object's attributes and values.
-        """
-        #self.__dict__ return a dictionary of the object's attributes and values
-        product_info = ' '.join([f"{colors.ANSI_CYAN + key.capitalize() + colors.ANSI_RESET}: {value:<12}" for key, value in self.__dict__.items()])
-        return product_info
-
     def get_product_info(self, name: str):
         '''
         Print information of a product.
@@ -132,7 +118,6 @@ class ProductManager:
             print("Product not found")
             return None
         return product.print_product_info()
-    
     def to_dict(self):
         '''
         convert ANY class object into a dict

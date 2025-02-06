@@ -63,6 +63,8 @@ class Menu:
         f" 2.    {colors.ANSI_UNDERLINE}Show products by category{colors.ANSI_RESET} \n"
         f" 3.    {colors.ANSI_UNDERLINE}Calculate the total inventory value{colors.ANSI_RESET} \n"
         f" 4.    {colors.ANSI_UNDERLINE}Sort the inventory{colors.ANSI_RESET} \n"
+        f" 5.    {colors.ANSI_UNDERLINE}See total products value on bar graph{colors.ANSI_RESET} \n"
+        f" 6.    {colors.ANSI_UNDERLINE}Show inventory products on pie graph{colors.ANSI_RESET} \n"
         f" 10.   {colors.ANSI_UNDERLINE}Save actual inventory to JSON{colors.ANSI_RESET} \n"
         f" 11.   {colors.ANSI_UNDERLINE}Load inventory from JSON{colors.ANSI_RESET} \n"
         f" 12.   {colors.ANSI_UNDERLINE}Go back{colors.ANSI_RESET}\n"
@@ -227,7 +229,12 @@ def run_inventory_menu(self,inventory):
                 print("this option doesn't exist, try again")
             keep_on()
             print(run_inventory_menu(self,inventory)) 
-
+        elif chosen_number == 5:
+                InventoryManager.show_graph_product_value(inventory)
+                keep_on()   
+        elif chosen_number == 6:
+                InventoryManager.show_pie_graph_products(inventory)
+                keep_on()
         elif chosen_number == 10:
             file = show_input("File", 5, self.show_inventory_menu())
             InventoryManager.save_to_json(inventory, file)
@@ -238,13 +245,7 @@ def run_inventory_menu(self,inventory):
             keep_on()
         elif chosen_number == 12:
             print(self.run_main_menu(inventory))
-            keep_on()   
-        elif chosen_number == 13:
-            InventoryManager.show_graph_product_value(inventory)
-            keep_on()   
-        elif chosen_number == 14:
-            InventoryManager.show_pie_graph_products(inventory)
-            keep_on()       
+            keep_on()          
         else:
             print("this option doesn't exist, try again")
 
