@@ -1,4 +1,5 @@
 from inventory.product import Product, Electronic, Vegetable, Fruit
+from inventory.inventory_manager import InventoryManager
 from .validators import get_valid_input
 import colors
 
@@ -33,15 +34,18 @@ class ProductManager:
             return func(self, name, *args, **kwargs)
         return inner
     
-    def add_product(self, name: str):
+    def add_product(self):
         """
-        Add a product to the inventory.
+        Add a product to the inventory by asking for user input.
         
-        Parameters:
-        product (Product): The Product object to add.
+        This method prompts the user to input a category name, checks if the category exists, 
+        and then prompts the user for additional product details based on the category.
+        
+        If the product does not already exist in the inventory, it is added.
+        
+        Returns:
+        self: The inventory instance with the newly added product.
         """
-        if self.find_product(name):
-            return print("Product already exists")
         all_subclasses = get_subclasses(Product)
         while True:
             category: str = input(f"Category name ({get_subclasses(Product)}) : ")
@@ -49,23 +53,18 @@ class ProductManager:
                 print("Category doesn't exist, try again")
             else:
                 break
-        price  = get_valid_input("Enter a price: ", "float")
-        price = float(price)
-        quantity  = get_valid_input("Enter the quantity: ", "int")
-        quantity = int(quantity)
         if category == "Electronic":
-            brand = input("Enter a brand:")
-            warranty_period = get_valid_input("Enter a warranty period (in months): ", "int")
-            warranty_period = int(warranty_period)
-            product = Electronic(name, category, price, quantity, brand, warranty_period)
+            product = Electronic.add_product()
         elif category == "Vegetable":
-            expiry_date = input("Enter expiry date (format mm/yyyy): ")
-            product = Vegetable(name, category, price, quantity, expiry_date)
+            product = Vegetable.add_product()
         elif category == "Fruit":
-            season = input("Enter the season: ")
-            product = Fruit(name, category, price, quantity, season)
-        self.products.append(product)
-        print(f"{product.name} added succesfully")
+            product = Fruit.add_product()
+        
+        if not self.find_product(product.name):
+            self.products.append(product)
+            print(f"{product.name} added succesfully")
+        else:
+            print("Product already exists in the inventory")
         return self
 
     def check_product_exists(func):
@@ -118,11 +117,6 @@ class ProductManager:
             print("Product not found")
             return None
         return product.print_product_info()
-    def to_dict(self):
-        '''
-        convert ANY class object into a dict
-        '''
-        return {key: value for key, value in self.__dict__.items()}
     
     def update_price(self,name: str, price: float):
         '''
@@ -153,6 +147,7 @@ class ProductManager:
         product.quantity = quantity
         print(f"Quantity of {name} updated to {product.quantity}")
         return self
+    
     #@check_product_exists
     def total_product_value(self, name):
         '''

@@ -65,9 +65,9 @@ class Menu:
         f" 4.    {colors.ANSI_UNDERLINE}Sort the inventory{colors.ANSI_RESET} \n"
         f" 5.    {colors.ANSI_UNDERLINE}See total products value on bar graph{colors.ANSI_RESET} \n"
         f" 6.    {colors.ANSI_UNDERLINE}Show inventory products on pie graph{colors.ANSI_RESET} \n"
-        f" 10.   {colors.ANSI_UNDERLINE}Save actual inventory to JSON{colors.ANSI_RESET} \n"
-        f" 11.   {colors.ANSI_UNDERLINE}Load inventory from JSON{colors.ANSI_RESET} \n"
-        f" 12.   {colors.ANSI_UNDERLINE}Go back{colors.ANSI_RESET}\n"
+        f" 7.    {colors.ANSI_UNDERLINE}Save actual inventory to JSON{colors.ANSI_RESET} \n"
+        f" 8.    {colors.ANSI_UNDERLINE}Load inventory from JSON{colors.ANSI_RESET} \n"
+        f" 9.    {colors.ANSI_UNDERLINE}Go back{colors.ANSI_RESET}\n"
         "==================================================\n"
         )
         return inventory_menu
@@ -137,8 +137,8 @@ def run_product_menu(self, inventory):
         chosen_number = int(chosen_number) 
 
         if chosen_number == 1:
-            name: str = show_input("Product",1, self.show_product_menu())
-            ProductManager.add_product(inventory, name)
+            #name: str = show_input("Product",1, self.show_product_menu())
+            ProductManager.add_product(inventory)
             keep_on()
         elif chosen_number == 2:
             name: str = show_input("Product",2, self.show_product_menu())
@@ -235,15 +235,15 @@ def run_inventory_menu(self,inventory):
         elif chosen_number == 6:
                 InventoryManager.show_pie_graph_products(inventory)
                 keep_on()
-        elif chosen_number == 10:
-            file = show_input("File", 5, self.show_inventory_menu())
+        elif chosen_number == 7:
+            file = show_input("File", 7, self.show_inventory_menu())
             InventoryManager.save_to_json(inventory, file)
             keep_on()
-        elif chosen_number == 11:
-            file = show_input("File", 6, self.show_inventory_menu())
+        elif chosen_number == 8:
+            file = show_input("File", 8, self.show_inventory_menu())
             InventoryManager.load_from_json(inventory,file)
             keep_on()
-        elif chosen_number == 12:
+        elif chosen_number == 9:
             print(self.run_main_menu(inventory))
             keep_on()          
         else:

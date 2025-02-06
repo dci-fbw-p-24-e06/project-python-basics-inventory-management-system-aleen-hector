@@ -3,15 +3,13 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 class InventoryManager:
-    def __init__(self,products = None):
+    def __init__(self,products = []):
         """
         Initialize the InventoryManager with a list of products.
         
         Parameters:
         products (list): A list of Product objects. Defaults to an empty list if not provided.
         """
-        if products is None:
-            products = []
         self.products = products
     
     def is_inventory_empty(func):
