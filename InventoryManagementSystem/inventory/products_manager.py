@@ -1,7 +1,4 @@
 from inventory.product import Product, Electronic, Vegetable, Fruit
-from inventory.inventory_manager import InventoryManager
-from .validators import get_valid_input
-import colors
 
 def get_subclasses(cls):
     subclasses = cls.__subclasses__()
@@ -48,7 +45,7 @@ class ProductManager:
         """
         all_subclasses = get_subclasses(Product)
         while True:
-            category: str = input(f"Category name ({get_subclasses(Product)}) : ")
+            category: str = input(f"from which category do you want to add a product ({get_subclasses(Product)}) ? ")
             if category not in all_subclasses:
                 print("Category doesn't exist, try again")
             else:

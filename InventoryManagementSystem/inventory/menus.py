@@ -111,7 +111,7 @@ class Menu:
             # Validate if the input is an integer 
             chosen_number = get_valid_input("What you want to do? ", "int")
             
-            # Proceed with the task selection
+            # Convert the input to an integer for task selection
             chosen_number = int(chosen_number) 
 
             if chosen_number == 1:
@@ -128,16 +128,27 @@ class Menu:
             else:
                 print("this option doesn't exist, try again")
 def run_product_menu(self, inventory):
+    """
+    Display the product menu, validate user input, and execute corresponding tasks.
+
+    Continuously displays the product menu to the user and processes their input to
+    execute the corresponding tasks. Validates that the user input is an integer
+    and calls the appropriate functions based on the chosen task number. The loop 
+    continues until the user chooses to exit.
+
+    Parameters:
+    self: The instance of the Menu class.
+    inventory: An instance of the InventoryManager class.
+    """
     while True:
         print(self.show_product_menu())
         # Validate if the input is an integer 
         chosen_number = get_valid_input("What you want to do? ", "int")
         
-        # Proceed with the task selection
+        # Convert the input to an integer for task selection
         chosen_number = int(chosen_number) 
 
         if chosen_number == 1:
-            #name: str = show_input("Product",1, self.show_product_menu())
             ProductManager.add_product(inventory)
             keep_on()
         elif chosen_number == 2:
@@ -171,12 +182,24 @@ def run_product_menu(self, inventory):
             print("this option doesn't exist, try again")
 
 def run_inventory_menu(self,inventory):
+    """
+    Display the inventory menu, validate user input, and execute corresponding tasks.
+
+    Continuously displays the inventory menu to the user and processes their input to
+    execute the corresponding tasks. Validates that the user input is an integer
+    and calls the appropriate functions based on the chosen task number. The loop 
+    continues until the user chooses to exit.
+
+    Parameters:
+    self: The instance of the Menu class.
+    inventory: An instance of the InventoryManager class.
+    """
     while True:
         print(self.show_inventory_menu())
         # Validate if the input is an integer 
         chosen_number = get_valid_input("What you want to do? ", "int")
         
-        # Proceed with the task selection
+        # Convert the input to an integer for task selection
         chosen_number = int(chosen_number) 
     
         if chosen_number == 1:
@@ -209,7 +232,6 @@ def run_inventory_menu(self,inventory):
                 f'2. Sort by Category\n'
                 f'3. Sort by Price\n'
                 f'4. Sort by Quantity\n'
-
             )
             option = get_valid_input("How do you want to sort? ", "int")
             option = int(option)

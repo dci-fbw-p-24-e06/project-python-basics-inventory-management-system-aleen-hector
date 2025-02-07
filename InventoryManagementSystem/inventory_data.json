@@ -60,63 +60,63 @@
       "category": "Vegetable",
       "price": 0.4,
       "quantity": 30,
-      "expiry_date": "06/2024"
+      "expiry_date": "12/06/2024"
    },
    {
       "name": "Broccoli",
       "category": "Vegetable",
       "price": 0.8,
       "quantity": 15,
-      "expiry_date": "05/2024"
+      "expiry_date": "15/05/2024"
    },
    {
       "name": "Spinach",
       "category": "Vegetable",
       "price": 0.9,
       "quantity": 20,
-      "expiry_date": "04/2024"
+      "expiry_date": "30/04/2024"
    },
    {
       "name": "Potato",
       "category": "Vegetable",
       "price": 0.2,
       "quantity": 50,
-      "expiry_date": "12/2024"
+      "expiry_date": "07/12/2024"
    },
    {
       "name": "Tomato",
       "category": "Vegetable",
       "price": 0.5,
       "quantity": 40,
-      "expiry_date": "07/2024"
+      "expiry_date": "03/07/2024"
    },
    {
       "name": "Cucumber",
       "category": "Vegetable",
       "price": 0.6,
       "quantity": 25,
-      "expiry_date": "08/2024"
+      "expiry_date": "12/08/2024"
    },
    {
       "name": "Bell Pepper",
       "category": "Vegetable",
       "price": 0.7,
       "quantity": 18,
-      "expiry_date": "09/2024"
+      "expiry_date": "13/09/2024"
    },
    {
       "name": "Onion",
       "category": "Vegetable",
       "price": 0.3,
       "quantity": 35,
-      "expiry_date": "11/2024"
+      "expiry_date": "20/11/2024"
    },
    {
       "name": "Garlic",
       "category": "Vegetable",
       "price": 0.4,
       "quantity": 40,
-      "expiry_date": "10/2024"
+      "expiry_date": "15/10/2024"
    },
    {
       "name": "Laptop",

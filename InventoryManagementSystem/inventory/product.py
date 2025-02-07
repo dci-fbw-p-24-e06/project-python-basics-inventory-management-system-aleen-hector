@@ -1,5 +1,4 @@
-from .validators import get_valid_input
-from abc import abstractmethod
+from .validators import get_valid_input, validate_expiry_date, validate_season
 import colors
 class Product:
     def __init__(self,name: str, category: str, price: float, quantity: int):
@@ -84,7 +83,7 @@ class Vegetable(Product):
         Vegetable: The created Vegetable object.
         """
         base_product = super().add_product(cls)
-        expiry_date = input("Enter expiry date (format mm/yyyy): ")
+        expiry_date = validate_expiry_date()
         return cls(base_product["Name"], base_product["cls"], base_product["price"], base_product["quantity"], expiry_date)
 
     def to_dict(self):
@@ -122,7 +121,7 @@ class Fruit(Product):
         Fruit: The created Fruit object.
         """
         base_product = super().add_product(cls)
-        season = input("Enter the season: ")
+        season = validate_season()
         return cls(base_product["Name"], base_product["cls"], base_product["price"], base_product["quantity"], season)
 
     def to_dict(self):
