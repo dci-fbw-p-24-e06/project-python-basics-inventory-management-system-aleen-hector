@@ -1,6 +1,5 @@
 import colors
 from inventory.inventory_manager import InventoryManager
-from inventory.product import Product
 from inventory.products_manager import ProductManager
 from inventory.validators import get_valid_input, show_input
 class Menu:

@@ -51,18 +51,21 @@ class ProductManager:
             else:
                 break
         if category == "Electronic":
-            product = Electronic.add_product()
+            data = Electronic.get_user_input()
+            product = Electronic.add_product(**data)
         elif category == "Vegetable":
-            product = Vegetable.add_product()
+            data = Vegetable.get_user_input()
+            product = Vegetable.add_product(**data)
         elif category == "Fruit":
-            product = Fruit.add_product()
-        
+            data = Fruit.get_user_input()
+            product = Fruit.add_product(**data)
         if not self.find_product(product.name):
             self.products.append(product)
             print(f"{product.name} added succesfully")
+            return product
         else:
             print("Product already exists in the inventory")
-        return self
+            return None
 
     def check_product_exists(func):
         """

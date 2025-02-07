@@ -16,6 +16,7 @@ def main():
     inventory = InventoryManager()
     menu = Menu()
     menu.run_main_menu(inventory)
+  
 
 #run the programm
 main()
