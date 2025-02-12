@@ -148,7 +148,8 @@ def run_product_menu(self, inventory):
         chosen_number = int(chosen_number) 
 
         if chosen_number == 1:
-            ProductManager.add_product(inventory)
+            product = ProductManager.create_product(inventory)
+            InventoryManager.add_product(inventory, product)
             keep_on()
         elif chosen_number == 2:
             name: str = show_input("Product",2, self.show_product_menu())
@@ -251,11 +252,11 @@ def run_inventory_menu(self,inventory):
             keep_on()
             print(run_inventory_menu(self,inventory)) 
         elif chosen_number == 5:
-                InventoryManager.show_graph_product_value(inventory)
-                keep_on()   
+            InventoryManager.show_graph_product_value(inventory)
+            keep_on()   
         elif chosen_number == 6:
-                InventoryManager.show_pie_graph_products(inventory)
-                keep_on()
+            InventoryManager.show_pie_graph_products(inventory)
+            keep_on()
         elif chosen_number == 7:
             file = show_input("File", 7, self.show_inventory_menu())
             InventoryManager.save_to_json(inventory, file)

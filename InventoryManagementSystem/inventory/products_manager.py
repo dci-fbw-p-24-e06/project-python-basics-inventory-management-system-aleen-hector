@@ -31,7 +31,7 @@ class ProductManager:
             return func(self, name, *args, **kwargs)
         return inner
     
-    def add_product(self):
+    def create_product(self):
         """
         Add a product to the inventory by asking for user input.
         
@@ -59,13 +59,7 @@ class ProductManager:
         elif category == "Fruit":
             data = Fruit.get_user_input()
             product = Fruit.add_product(**data)
-        if not self.find_product(product.name):
-            self.products.append(product)
-            print(f"{product.name} added succesfully")
-            return product
-        else:
-            print("Product already exists in the inventory")
-            return None
+        return product
 
     def check_product_exists(func):
         """

@@ -1,4 +1,4 @@
-from .product import Product, Electronic, Vegetable, Fruit
+from inventory.product import Product, Electronic, Vegetable, Fruit
 import json
 import matplotlib.pyplot as plt
 import numpy as np
@@ -48,6 +48,29 @@ class InventoryManager:
                 return product
         return None
     
+    def add_product(self,product):
+        """
+        Add a product to the inventory if it doesn't already exist.
+
+        This method checks if a product with the same name already exists in the inventory.
+        If it doesn't, the product is added to the inventory. If it does, a message is 
+        printed indicating that the product already exists.
+
+        Args:
+            product (Product): The product to be added to the inventory.
+
+        Returns:
+            Product: The added product if it was successfully added.
+            None: If the product already exists in the inventory.
+        """
+        if not self.find_product(product.name):
+            self.products.append(product)
+            print(f"{product.name} added succesfully")
+            return product
+        else:
+            print("Product already exists in the inventory")
+            return None
+        
     @is_inventory_empty
     def show_inventory(self):
         """
@@ -139,21 +162,6 @@ class InventoryManager:
             print(f"Inventory loaded from {filename}")
         except FileNotFoundError:
             print(f"No such file: {filename}")
-    '''def load_from_json(self, filename):
-        """
-        Load the inventory data from a JSON file.
-        
-        Parameters:
-        filename (str): The name of the file to load the inventory data from.
-        """
-        try:
-            with open(filename, 'r') as file:
-                products_data = json.load(file)
-                self.products = [Product(**data) for data in products_data]
-            print(f"Inventory loaded from {filename}")
-        except FileNotFoundError:
-            print(f"No such file: {filename}")
-    '''
 
     
     def sort_by_attr(self, attr):
