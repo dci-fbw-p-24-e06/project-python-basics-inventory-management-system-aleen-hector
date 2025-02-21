@@ -15,6 +15,7 @@ class Product:
         self.category = category
         self.price = price
         self.quantity = quantity  
+    
 
     @staticmethod
     def get_user_input():
@@ -35,7 +36,7 @@ class Product:
         return {"name": name, "price":price, "quantity": quantity}
     
     @classmethod
-    def add_product(cls, *args, **kwargs):
+    def create_product(cls, *args, **kwargs):
         """
         Add a product to the inventory by asking for user input.
 
@@ -109,7 +110,7 @@ class Vegetable(Product):
         
         return base_input
     @classmethod
-    def add_product(cls, *args, **kwargs):
+    def create_product(cls, *args, **kwargs):
         """
         Add a vegetable product to the inventory.
 
@@ -180,7 +181,7 @@ class Fruit(Product):
         return base_input
     
     @classmethod
-    def add_product(cls, *args, **kwargs):
+    def create_product(cls, *args, **kwargs):
         """
         Add a fruit product to the inventory.
 
@@ -253,7 +254,7 @@ class Electronic(Product):
         
         return base_input
     @classmethod
-    def add_product(cls, *args, **kwargs):
+    def create_product(cls, *args, **kwargs):
         """
         Add an electronic product to the inventory.
 

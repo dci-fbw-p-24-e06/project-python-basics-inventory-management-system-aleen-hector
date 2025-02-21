@@ -1,0 +1,8 @@
+# run the Main GUI Inventory Project(GUI TKinter & PySimpleGUI): python3 /project-python-basics-inventory-management-system-aleen-hector/main.python
+# run dynamically terminal input Inventory project: python3 /project-python-basics-inventory-management-system-aleen-hector/InventoryManagementSystem/main.py
+# run PySimpleGUI Inventory Project: python3 /project-python-basics-inventory-management-system-aleen-hector/InventoryManagementGUI/main.py
+# run simple project with terminal output: python3 project-python-basics-inventory-management-system-aleen-hector/InventoryManagementSystem/test_inventory_manager.py 
+# run tests: python3 -m unittest project-python-basics-inventory-management-system-aleen-hector/InventoryManagementSystem/tests/testing.py
+
+Libraries needed to run the full project: matplotlib.pyplot, numpy, TKinter, PysimpleGUI, 
+

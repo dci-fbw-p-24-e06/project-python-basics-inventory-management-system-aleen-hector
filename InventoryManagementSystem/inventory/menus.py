@@ -163,7 +163,7 @@ def run_product_menu(self, inventory):
             keep_on()    
         elif chosen_number == 4:
             name: str = show_input("Product",4,self.show_product_menu())
-            ProductManager.total_product_value(inventory, name)
+            print(ProductManager.total_product_value(inventory, name))
             keep_on()
         elif chosen_number == 5:
             name: str = show_input("Product",5,self.show_product_menu())

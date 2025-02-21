@@ -21,7 +21,7 @@ if __name__ == "__main__":
       {"name": "Potato", "price": 0.75, "quantity": 100, "expiry_date": "09/2025"}
    ]
    for data in vegetable_data:
-      new_vegetable = Vegetable.add_product(**data)
+      new_vegetable = Vegetable.create_product(**data)
       inventory.add_product(new_vegetable)
 
    # Fruits
@@ -29,10 +29,10 @@ if __name__ == "__main__":
       {"name": "Apple", "price": 0.50, "quantity": 100, "season": "Autumn"},
       {"name": "Banana", "price": 0.30, "quantity": 120, "season": "All year"},
       {"name": "Cherry", "price": 3.00, "quantity": 25, "season": "Summer"},
-      {"name": "Orange", "price": 0.60, "quantity": 80, "season": "Winter"}
+      {"name": "Orange", "price": 0.50, "quantity": 80, "season": "Winter"}
    ]
    for data in fruit_data:
-      new_fruit = Fruit.add_product(**data)
+      new_fruit = Fruit.create_product(**data)
       inventory.add_product(new_fruit)
   
    # Electronics
@@ -44,7 +44,7 @@ if __name__ == "__main__":
       {"name": "Smartwatch", "price": 299.99, "quantity": 25, "brand": "WatchBrand", "warranty_period": 24}
    ]
    for data in electronic_data:
-      new_electronic = Electronic.add_product(**data)
+      new_electronic = Electronic.create_product(**data)
       inventory.add_product(new_electronic)
 
    #Functions testing after adding data
@@ -62,10 +62,10 @@ if __name__ == "__main__":
    print("INVENTORY TOAL VALUE AFTER DELETING CARROT:")
    inventory.total_inventory_value()
    #delete and adding
-   orange = Fruit.add_product(name="Orange", price=0.60, quantity=80, season="Winter")
+   orange = Fruit.create_product(name="Orange", price=0.60, quantity=80, season="Winter")
    inventory.add_product(orange)
    ProductManager.delete_product(inventory,"Orange")
-   orange = Fruit.add_product(name="Orange", price=0.60, quantity=80, season="Winter")
+   orange = Fruit.create_product(name="Orange", price=0.60, quantity=80, season="Winter")
    inventory.add_product(orange)
    #updating data from a product
    print("UPDATING PRICE AND QUANTITY ")
@@ -74,10 +74,9 @@ if __name__ == "__main__":
    ProductManager.update_price(inventory, "Orange", 0.75)
    ProductManager.update_quantity(inventory, "Orange", 10)
    print(ProductManager.get_product_info(inventory, "Orange"))
-   ProductManager.total_product_value(inventory, "Orange")
+   print(ProductManager.total_product_value(inventory, "Orange"))
 
    #InventoryManager TESTING
-
    print("SHOWING PRODUCTS FROM CATEGORY")
    print(f"Products from category Fruit:")
    inventory.product_summary_category("Fruit")
@@ -107,6 +106,7 @@ if __name__ == "__main__":
    #show graphs
    inventory.show_graph_product_value()
    inventory.show_pie_graph_products()
-   
+
+
 
 

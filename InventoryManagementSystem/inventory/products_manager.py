@@ -52,36 +52,14 @@ class ProductManager:
                 break
         if category == "Electronic":
             data = Electronic.get_user_input()
-            product = Electronic.add_product(**data)
+            product = Electronic.create_product(**data)
         elif category == "Vegetable":
             data = Vegetable.get_user_input()
-            product = Vegetable.add_product(**data)
+            product = Vegetable.create_product(**data)
         elif category == "Fruit":
             data = Fruit.get_user_input()
-            product = Fruit.add_product(**data)
+            product = Fruit.create_product(**data)
         return product
-
-    def check_product_exists(func):
-        """
-        Decorator to check if a product exists in the inventory.
-
-        If the specified product is not found in the inventory, it prints "Product not found"
-        and returns None. Otherwise, it calls the decorated function.
-
-        Parameters:
-        func: The function to be decorated.
-
-        Returns:
-        inner: The decorated function.
-        """
-        def inner(self, name, *args, **kwargs):
-            product = self.find_product(name)
-            if not product:
-                print("Product not found")
-                return None
-            return func(self, name, *args, **kwargs)
-        return inner
-    
     
     @check_product_exists
     def delete_product(self, name):
@@ -94,7 +72,7 @@ class ProductManager:
         product = self.find_product(name)
         print(f"Product {product.name} found and deleted from inventory")
         self.products.remove(product)
-        return self
+        return self.products
 
     def get_product_info(self, name: str):
         '''
@@ -125,7 +103,7 @@ class ProductManager:
             return None
         product.price = price
         print(f"price of {name} updated to {product.price}")
-        return self
+        return product.price
     
     def update_quantity(self,name:str, quantity:int):
         '''
@@ -140,7 +118,7 @@ class ProductManager:
             return None
         product.quantity = quantity
         print(f"Quantity of {name} updated to {product.quantity}")
-        return self
+        return product.quantity
     
     #@check_product_exists
     def total_product_value(self, name):
@@ -152,4 +130,4 @@ class ProductManager:
             print("Product not found")
             return None
         total_value: float = float(product.price) * int(product.quantity)
-        return print(f"The total value of {product.name} is: {total_value} euros")
+        return f"The total value of {product.name} is: {total_value} euros"

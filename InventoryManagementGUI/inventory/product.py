@@ -211,9 +211,9 @@ class Fruit(Product):
         """
         # Base input using the Product's get_user_input method
         base_input = Product.get_user_input()
-        
+        year_seasons = ['Fall', 'Winter', 'Spring', 'Summer']
         layout = [
-            [sg.Text("Enter season:"), sg.InputText(key="season")],
+            [sg.Text("Enter season:"), sg.Combo(year_seasons, default_value=year_seasons[1], key="season", readonly=True)],
             [sg.Submit(), sg.Cancel()]
         ]
 

@@ -80,7 +80,7 @@ class InventoryManager:
         """
         for product in self.products:
             print(product.print_product_info())
-        return self
+        return self.products
 
     @is_inventory_empty
     def product_summary_category(self, category: str):
@@ -107,9 +107,8 @@ class InventoryManager:
             print("This category doesn't exists already or have not products")
         else:
             print(", ".join(list_products))
-        return self
+        return list_products
     
-    @is_inventory_empty
     def total_inventory_value(self):
         """
         Calculate and print the total inventory value.
@@ -120,9 +119,13 @@ class InventoryManager:
         Returns:
         self: The instance of the Inventory class.
         """
-        total_value = sum(product.price * product.quantity for product in self.products)
-        print(f"Total inventory value = {total_value} €")
-        return self
+        if not self.products:
+             total_value = 0
+             print(f"Inventory is empty, Total inventory value = {total_value} €")
+        else:
+            total_value = sum(product.price * product.quantity for product in self.products)
+            print(f"Total inventory value = {total_value} €")
+        return total_value
         
     @is_inventory_empty
     def save_to_json(self, filename):
@@ -180,7 +183,7 @@ class InventoryManager:
 
 ### GRAPHICAL VISUALIZATION IMPLEMENTING ###
 
-
+    @is_inventory_empty
     def show_pie_graph_products(self):
         """
         Displays a pie chart of the quantities of products.
@@ -216,6 +219,7 @@ class InventoryManager:
                bbox_to_anchor=(1, 0, 0.5, 1))
         plt.show()
     
+    @is_inventory_empty
     def show_graph_product_value(self):
         """
         Displays bar graphs of the total value of products.

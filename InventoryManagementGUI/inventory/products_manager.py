@@ -26,21 +26,20 @@ class ProductManager:
     def create_product(self):
         all_subclasses = get_subclasses(Product)
         layout = [
-            [sg.Text(f"Choose a category: {all_subclasses}")],
-            [sg.InputText(key='CATEGORY')],
+            [sg.Text("Choose a category:"), sg.Combo(all_subclasses, default_value='Vegetable', key="CATEGORY", readonly=True)],
             [sg.Button('Submit')]
         ]
         window = sg.Window('Add Product', layout)
+
         while True:
             event, values = window.read()
             if event in (sg.WIN_CLOSED,):
                 window.close()
                 return
+
             category = values['CATEGORY']
-            if category not in all_subclasses:
-                sg.popup("Category doesn't exist, try again")
-            else:
-                break
+            break
+
         window.close()
 
         if category == "Electronic":
