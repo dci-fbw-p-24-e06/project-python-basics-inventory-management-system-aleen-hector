@@ -9,15 +9,6 @@ class TestInventoryManager(unittest.TestCase):
     def setUp(self):
         self.inventory = InventoryManager()
         self.orange = Fruit.create_product(name="Orange", price=0.50, quantity=80, season="Winter")
-    def test_is_inventory_empty(self):
-        self.assertTrue(self.inventory.is_inventory_empty())
-    def test_find_product(self):
-        self.assertIsNone(self.inventory.find_product("Carrot"))
-    def test_add_product(self):
-        self.assertEqual(self.inventory.add_product(self.orange),self.orange)
-    def test_add_product_already_exists(self):
-        self.assertEqual(self.inventory.add_product(self.orange),None)
-    def test_product_summary_categories(self):
         #create Fruit instances
         self.apple = Fruit.create_product(name="Apple", price=1, quantity=100, season="Autumn") 
         self.banana = Fruit.create_product(name="Banana", price=0.50, quantity=50, season="All year") 
@@ -30,12 +21,21 @@ class TestInventoryManager(unittest.TestCase):
         self.inventory.add_product(self.cherry)
         self.inventory.add_product(self.strawberry)
         self.inventory.add_product(self.grape)
-        self.assertListEqual(self.inventory.product_summary_category("Fruit"), ["Orange", "Apple", "Banana", "Cherry", "Strawberry", "Grape"])
+    def test_is_inventory_empty(self):
+        self.assertTrue(self.inventory.is_inventory_empty())
+    def test_find_product(self):
+        self.assertIsNone(self.inventory.find_product("Carrot"))
+    def test_add_product(self):
+        self.assertEqual(self.inventory.add_product(self.orange),self.orange)
+    def test_add_product_already_exists(self):
+        self.inventory.add_product(self.orange)
+        self.assertEqual(self.inventory.add_product(self.orange),None)
+    def test_product_summary_categories(self):
+        self.assertListEqual(self.inventory.product_summary_category("Fruit"), ["Apple", "Banana", "Cherry", "Strawberry", "Grape"])
     def test_total_inventory_value(self):
-        self.assertEqual(self.inventory.total_inventory_value(), 330)
+        self.assertEqual(self.inventory.total_inventory_value(), 290)
     def test_show_inventory(self):
         product_list = [product.name for product in self.inventory.show_inventory()]
-        self.assertIn("Orange", product_list)
         self.assertIn("Banana", product_list)
         self.assertIn("Cherry", product_list)
         self.assertIn("Grape", product_list)
@@ -56,18 +56,19 @@ class TestProductsManager(unittest.TestCase):
         self.tomato = Vegetable.create_product(name="Tomato", price=2.00, quantity=50, expiry_date="10/2025")
         # Fruit object instance
         self.strawberry = Fruit.create_product(name="Strawberry", price=0.20, quantity=200, season="Summer")
+        
         # Electronic object instance
         self.camera = Electronic.create_product(name="Camera", price=500, quantity=10, brand="PhotoBrand", warranty_period=12)
 
-
+        self.inventory.add_product(self.tomato)
+        self.inventory.add_product(self.strawberry)
+        self.inventory.add_product(self.camera)
     def test_get_suclasses(self):
         all_subclasses = get_subclasses(Product)
         self.assertListEqual(all_subclasses, ["Vegetable", "Fruit", "Electronic"])
 
     def test_delete_product(self):
-        self.inventory.add_product(self.tomato)
-        self.inventory.add_product(self.strawberry)
-        self.inventory.add_product(self.camera)
+        
 
         ProductManager.delete_product(self.inventory, "Camera")
         self.assertIsNone(self.inventory.find_product("Camera"))

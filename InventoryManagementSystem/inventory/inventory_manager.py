@@ -3,7 +3,7 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 class InventoryManager:
-    def __init__(self,products = []):
+    def __init__(self,products = None):
         """
         Initialize the InventoryManager with a list of products.
         
@@ -32,7 +32,7 @@ class InventoryManager:
             return func(self, *args, **kwargs)
         return inner
 
-
+    @is_inventory_empty
     def find_product(self, product_name: str) -> Product:
         """
         Find a product in the inventory by name.
@@ -63,10 +63,12 @@ class InventoryManager:
             Product: The added product if it was successfully added.
             None: If the product already exists in the inventory.
         """
-        if not self.find_product(product.name):
+        if not self.find_product(product.name) and self.products:
             self.products.append(product)
             print(f"{product.name} added succesfully")
             return product
+        elif not self.find_product(product.name) and not self.products:
+            self.products = [product]
         else:
             print("Product already exists in the inventory")
             return None
