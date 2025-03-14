@@ -1,0 +1,10 @@
+{
+    "products": [
+        {
+            "name": "Apple Watch",
+            "category": "Electronics",
+            "price": 499.0,
+            "quantity": 6
+        }
+    ]
+}
