@@ -40,8 +40,7 @@ class Product:
         Returns:
         int: The remaining quantity after decrease."""
         if self.quantity - quantity < 0:
-            raise ValueError(
-                f"Cannot decrease quantity beyond stock for {self.name}")
+            raise ValueError(f"Cannot decrease quantity beyond stock for {self.name}")
         self.quantity -= quantity
         return self.quantity
 
