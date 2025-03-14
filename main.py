@@ -1,16 +1,8 @@
-import os
+import json
 from inventory.inventory_manager import InventoryManager
 
 def main():
-    """Main function to run the inventory management system."""
-    
-    # Ensure JSON file exists before loading
-    filename = "inventory.json"
-    if not os.path.exists(filename):
-        with open(filename, "w") as file:
-            file.write('{"products": []}')  # Initialize with empty products
-    
-    inventory = InventoryManager(filename)  # ✅ Loads inventory
+    inventory = InventoryManager()  # Load inventory from JSON
 
     while True:
         print("\n📦 Inventory Management System")
@@ -19,55 +11,57 @@ def main():
         print("3️⃣ Update Product Quantity")
         print("4️⃣ Search Product")
         print("5️⃣ Display Inventory")
-        print("6️⃣ Exit")
+        print("6️⃣ Update Product Price")
+        print("7️⃣ Show Total Inventory Value")
+        print("8️⃣ Show Total Inventory Quantity")
+        print("9️⃣ Exit")
         
-        choice = input("🔹 Choose an option (1-6): ")
-        
+        choice = input("🔹 Choose an option (1-9): ")
+
         if choice == "1":
-            name = input("Enter product name: ")
-            category = input("Enter category: ")
+            name = input("Enter product name: ").strip()
+            category = input("Enter category: ").strip()
             price = float(input("Enter price (€): "))
             quantity = int(input("Enter quantity: "))
             inventory.add_product(name, category, price, quantity)
-        
+
         elif choice == "2":
-            name = input("Enter product name to remove: ")
-            try:
-                inventory.remove_product(name)
-                print(f"✅ Product '{name}' removed.")
-            except ValueError as e:
-                print(f"❌ {e}")
-        
+            name = input("Enter product name to remove: ").strip()
+            inventory.remove_product(name)
+
         elif choice == "3":
-            name = input("Enter product name: ")
-            quantity = int(input("Enter new quantity: "))
-            try:
-                inventory.update_quantity(name, quantity)
-                print(f"✅ Updated quantity for '{name}'.")
-            except ValueError as e:
-                print(f"❌ {e}")
-        
+            name = input("Enter product name to update quantity: ").strip()
+            new_quantity = int(input("Enter new quantity: "))
+            inventory.update_quantity(name, new_quantity)
+
         elif choice == "4":
-            name = input("Enter product name to search: ")
-            result = inventory.search_product(name)
-            if result:
-                for product in result:
-                    print(product.get_product_info())
-            else:
-                print(f"❌ Product '{name}' not found.")
+            name = input("Enter product name to search: ").strip()
+            inventory.search_product(name)
 
         elif choice == "5":
-            inventory.display_inventory()  # ✅ Now correctly displays loaded inventory
-        
+            inventory.display_inventory()
+
         elif choice == "6":
-            print("📦 Exiting... Inventory saved.")
-            inventory.save_inventory()  # ✅ Ensure all changes are saved before exit
+            name = input("Enter product name to update price: ").strip()
+            new_price = float(input("Enter new price (€): "))
+            inventory.update_price(name, new_price)
+
+        elif choice == "7":
+            total_value = inventory.get_total_inventory_value()
+            print(f"📊 Total Inventory Value: {total_value:.2f}€")
+
+        elif choice == "8":
+            total_quantity = inventory.inventory_quantity()
+            print(f"📦 Total Inventory Quantity: {total_quantity} items")
+
+        elif choice == "9":
+            print("🔴 Exiting... Inventory saved.")
+            inventory.save_inventory()  # Save inventory before exiting
             break
-        
+
         else:
-            print("❌ Invalid choice. Please enter a number between 1 and 6.")
+            print("❌ Invalid choice. Please enter a number between 1 and 9.")
+
 
 if __name__ == "__main__":
     main()
-
-

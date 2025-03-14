@@ -17,10 +17,11 @@ class InventoryManager:
         self.load_inventory() 
 
     def load_inventory(self):
-        """Loads inventory from a JSON file if it exists."""
+        """Loads inventory from a JSON file. If empty, preloads default products."""
         if not os.path.exists(self.filename):
-            print(f"⚠️ {self.filename} not found. Initializing empty inventory.")
-            return  # Avoid crashing if file doesn't exist
+            print(f"⚠️ {self.filename} not found. Initializing with default products.")
+            self.preload_default_products()
+            return  
 
         try:
             with open(self.filename, "r") as file:
@@ -28,6 +29,11 @@ class InventoryManager:
 
             if "products" not in data or not isinstance(data["products"], list):
                 print("❌ Invalid JSON format: Missing 'products' key or incorrect format.")
+                return
+
+            if not data["products"]:  # If the list is empty, preload products
+                print("⚠️ Inventory is empty. Adding default products.")
+                self.preload_default_products()
                 return
 
             self.products = {
@@ -40,6 +46,71 @@ class InventoryManager:
 
         except json.JSONDecodeError:
             print(f"❌ Error: Invalid JSON format in {self.filename}.")
+
+    def preload_default_products(self):
+        """Adds default products to the inventory and saves them."""
+        default_products = [
+        Product("Shampoo", "Groceries", 5.99, 10),
+        Product("Laptop", "Electronics", 999.99, 5),
+        Product("T-Shirt", "Clothing", 19.99, 20),
+        Product("Desk Lamp", "Home Essentials", 29.99, 8),
+        Product("Smartphone", "Electronics", 699.99, 15),
+        Product("Headphones", "Electronics", 89.99, 25),
+        Product("Running Shoes", "Clothing", 49.99, 12),
+        Product("Backpack", "Clothing", 39.99, 18),
+        Product("Washing Machine", "Home Essentials", 499.99, 4),
+        Product("Refrigerator", "Home Essentials", 799.99, 3),
+        Product("Oven", "Home Essentials", 399.99, 5),
+        Product("Gaming Mouse", "Electronics", 59.99, 20),
+        Product("Office Chair", "Home Essentials", 149.99, 7),
+        Product("Notebook", "Groceries", 2.99, 50),
+        Product("LED Light Bulb", "Home Essentials", 9.99, 30),
+        Product("Coffee Maker", "Home Essentials", 79.99, 6),
+        Product("Blender", "Home Essentials", 59.99, 10),
+        Product("Towel Set", "Home Essentials", 24.99, 15),
+        Product("Yoga Mat", "Clothing", 34.99, 9),
+        Product("Hair Dryer", "Home Essentials", 45.99, 11),
+        Product("Electric Toothbrush", "Groceries", 39.99, 22),
+        Product("Sunscreen", "Groceries", 12.99, 17),
+        Product("Printer", "Electronics", 199.99, 6),
+        Product("Desk", "Home Essentials", 249.99, 5),
+        Product("Speakers", "Electronics", 129.99, 14),
+        Product("Fitness Tracker", "Electronics", 149.99, 8),
+        Product("Sofa", "Home Essentials", 999.99, 3)
+        ]
+        
+        for product in default_products:
+            self.products[product.name] = product
+        
+        self.save_inventory()
+        print("✅ Default products added.")
+
+    def update_price(self, name: str, new_price: float):
+        """Updates the price of a product in the inventory."""
+        name = name.lower()
+        found_product = None
+
+        for product_name in self.products:
+            if product_name.lower() == name:
+                found_product = product_name
+                break
+
+        if found_product:
+            self.products[found_product].price = new_price
+            self.save_inventory()
+            print(f"✅ Price of '{found_product}' updated to {new_price:.2f}€.")
+        else:
+            print(f"❌ Product '{name}' does not exist.")
+
+    def get_total_inventory_value(self):
+        """Calculates the total value of all products in the inventory."""
+        total_value = sum(product.price * product.quantity for product in self.products.values())
+        return total_value
+
+    def inventory_quantity(self):
+        """Calculates the total number of items in inventory."""
+        total_quantity = sum(product.quantity for product in self.products.values())
+        return total_quantity
 
     def save_inventory(self):
         """Saves the current inventory to a JSON file."""
@@ -62,18 +133,29 @@ class InventoryManager:
         self.save_inventory()  # ✅ Save after adding
 
     def remove_product(self, name: str):
-        """Removes a product from the inventory."""
-        if name not in self.products:
-            raise ValueError(f"Product '{name}' does not exist.")
-        del self.products[name]
-        self.save_inventory()  # ✅ Save after removal
+        """Removes a product from the inventory (case-insensitive)."""
+        name = name.lower()  # Convert input to lowercase
+        found_product = None
+
+        for product_name in self.products:
+            if product_name.lower() == name:  # Compare case-insensitively
+                found_product = product_name
+                break
+
+        if found_product:
+            del self.products[found_product]
+            self.save_inventory()  # ✅ Save after removal
+            print(f"✅ Product '{found_product}' removed successfully.")
+        else:
+            print(f"❌ Product '{name}' does not exist.")
+
 
     def update_quantity(self, name: str, new_quantity: int):
         """Updates the quantity of a product in the inventory."""
         if name not in self.products:
             raise ValueError(f"Product '{name}' does not exist.")
         self.products[name].quantity = new_quantity
-        self.save_inventory()  # ✅ Save after update
+        self.save_inventory()
 
     def search_product(self, name: str):
         """Search for a product by name (case-insensitive)."""

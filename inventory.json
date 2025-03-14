@@ -1,10 +1,160 @@
 {
     "products": [
         {
+            "name": "Laptop",
+            "category": "Electronics",
+            "price": 999.99,
+            "quantity": 5
+        },
+        {
+            "name": "T-Shirt",
+            "category": "Clothing",
+            "price": 19.99,
+            "quantity": 20
+        },
+        {
+            "name": "Desk Lamp",
+            "category": "Home Essentials",
+            "price": 29.99,
+            "quantity": 8
+        },
+        {
+            "name": "Smartphone",
+            "category": "Electronics",
+            "price": 699.99,
+            "quantity": 15
+        },
+        {
+            "name": "Headphones",
+            "category": "Electronics",
+            "price": 89.99,
+            "quantity": 25
+        },
+        {
+            "name": "Running Shoes",
+            "category": "Clothing",
+            "price": 49.99,
+            "quantity": 12
+        },
+        {
+            "name": "Backpack",
+            "category": "Clothing",
+            "price": 39.99,
+            "quantity": 18
+        },
+        {
+            "name": "Washing Machine",
+            "category": "Home Essentials",
+            "price": 499.99,
+            "quantity": 4
+        },
+        {
+            "name": "Refrigerator",
+            "category": "Home Essentials",
+            "price": 799.99,
+            "quantity": 3
+        },
+        {
+            "name": "Oven",
+            "category": "Home Essentials",
+            "price": 399.99,
+            "quantity": 5
+        },
+        {
+            "name": "Gaming Mouse",
+            "category": "Electronics",
+            "price": 59.99,
+            "quantity": 20
+        },
+        {
+            "name": "Office Chair",
+            "category": "Home Essentials",
+            "price": 149.99,
+            "quantity": 7
+        },
+        {
+            "name": "Notebook",
+            "category": "Groceries",
+            "price": 2.99,
+            "quantity": 50
+        },
+        {
+            "name": "LED Light Bulb",
+            "category": "Home Essentials",
+            "price": 9.99,
+            "quantity": 30
+        },
+        {
+            "name": "Coffee Maker",
+            "category": "Home Essentials",
+            "price": 79.99,
+            "quantity": 6
+        },
+        {
+            "name": "Blender",
+            "category": "Home Essentials",
+            "price": 59.99,
+            "quantity": 10
+        },
+        {
+            "name": "Towel Set",
+            "category": "Home Essentials",
+            "price": 24.99,
+            "quantity": 15
+        },
+        {
+            "name": "Hair Dryer",
+            "category": "Home Essentials",
+            "price": 56.0,
+            "quantity": 11
+        },
+        {
+            "name": "Electric Toothbrush",
+            "category": "Groceries",
+            "price": 39.99,
+            "quantity": 22
+        },
+        {
+            "name": "Sunscreen",
+            "category": "Groceries",
+            "price": 12.99,
+            "quantity": 17
+        },
+        {
+            "name": "Printer",
+            "category": "Electronics",
+            "price": 199.99,
+            "quantity": 6
+        },
+        {
+            "name": "Desk",
+            "category": "Home Essentials",
+            "price": 249.99,
+            "quantity": 5
+        },
+        {
+            "name": "Speakers",
+            "category": "Electronics",
+            "price": 129.99,
+            "quantity": 14
+        },
+        {
+            "name": "Fitness Tracker",
+            "category": "Electronics",
+            "price": 149.99,
+            "quantity": 8
+        },
+        {
+            "name": "Sofa",
+            "category": "Home Essentials",
+            "price": 999.99,
+            "quantity": 3
+        },
+        {
             "name": "Apple Watch",
             "category": "Electronics",
             "price": 499.0,
-            "quantity": 6
+            "quantity": 8
         }
     ]
 }
