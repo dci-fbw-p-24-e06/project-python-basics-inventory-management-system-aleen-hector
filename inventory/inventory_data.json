@@ -1,0 +1,245 @@
+{
+    "products": [
+      {
+        "name": "Laptop",
+        "category": "Electronics",
+        "price": 1200.00,
+        "quantity": 10
+      },
+      {
+        "name": "Smartphone",
+        "category": "Electronics",
+        "price": 800.00,
+        "quantity": 15
+      },
+      {
+        "name": "Headphones",
+        "category": "Electronics",
+        "price": 150.00,
+        "quantity": 30
+      },
+      {
+        "name": "Smartwatch",
+        "category": "Electronics",
+        "price": 250.00,
+        "quantity": 20
+      },
+      {
+        "name": "Gaming Console",
+        "category": "Electronics",
+        "price": 500.00,
+        "quantity": 12
+      },
+      {
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "price": 40.00,
+        "quantity": 50
+      },
+      {
+        "name": "T-shirt",
+        "category": "Clothing",
+        "price": 20.00,
+        "quantity": 100
+      },
+      {
+        "name": "Jeans",
+        "category": "Clothing",
+        "price": 50.00,
+        "quantity": 50
+      },
+      {
+        "name": "Sneakers",
+        "category": "Clothing",
+        "price": 75.00,
+        "quantity": 40
+      },
+      {
+        "name": "Winter Jacket",
+        "category": "Clothing",
+        "price": 120.00,
+        "quantity": 25
+      },
+      {
+        "name": "Socks Pack",
+        "category": "Clothing",
+        "price": 10.00,
+        "quantity": 60
+      },
+      {
+        "name": "Milk",
+        "category": "Groceries",
+        "price": 3.00,
+        "quantity": 200
+      },
+      {
+        "name": "Bread",
+        "category": "Groceries",
+        "price": 2.50,
+        "quantity": 180
+      },
+      {
+        "name": "Rice",
+        "category": "Groceries",
+        "price": 10.00,
+        "quantity": 120
+      },
+      {
+        "name": "Eggs (Dozen)",
+        "category": "Groceries",
+        "price": 5.00,
+        "quantity": 100
+      },
+      {
+        "name": "Coffee",
+        "category": "Groceries",
+        "price": 8.00,
+        "quantity": 90
+      },
+      {
+        "name": "Couch",
+        "category": "Home Essentials",
+        "price": 500.00,
+        "quantity": 5
+      },
+      {
+        "name": "Dining Table",
+        "category": "Home Essentials",
+        "price": 700.00,
+        "quantity": 3
+      },
+      {
+        "name": "Lamp",
+        "category": "Home Essentials",
+        "price": 50.00,
+        "quantity": 25
+      },
+      {
+        "name": "Bookshelf",
+        "category": "Home Essentials",
+        "price": 150.00,
+        "quantity": 10
+      },
+      {
+        "name": "Vacuum Cleaner",
+        "category": "Home Essentials",
+        "price": 250.00,
+        "quantity": 8
+      },
+      {
+        "name": "Notebook",
+        "category": "Office Supplies",
+        "price": 5.00,
+        "quantity": 150
+      },
+      {
+        "name": "Pen Pack",
+        "category": "Office Supplies",
+        "price": 8.00,
+        "quantity": 200
+      },
+      {
+        "name": "Printer",
+        "category": "Office Supplies",
+        "price": 250.00,
+        "quantity": 8
+      },
+      {
+        "name": "Desk Chair",
+        "category": "Office Supplies",
+        "price": 300.00,
+        "quantity": 12
+      },
+      {
+        "name": "Shampoo",
+        "category": "Beauty",
+        "price": 12.00,
+        "quantity": 60
+      },
+      {
+        "name": "Face Cream",
+        "category": "Beauty",
+        "price": 25.00,
+        "quantity": 50
+      },
+      {
+        "name": "Perfume",
+        "category": "Beauty",
+        "price": 60.00,
+        "quantity": 30
+      },
+      {
+        "name": "Toothpaste",
+        "category": "Beauty",
+        "price": 5.00,
+        "quantity": 100
+      },
+      {
+        "name": "Deodorant",
+        "category": "Beauty",
+        "price": 10.00,
+        "quantity": 80
+      },
+      {
+        "name": "Basketball",
+        "category": "Sports",
+        "price": 30.00,
+        "quantity": 20
+      },
+      {
+        "name": "Football",
+        "category": "Sports",
+        "price": 25.00,
+        "quantity": 25
+      },
+      {
+        "name": "Yoga Mat",
+        "category": "Sports",
+        "price": 40.00,
+        "quantity": 30
+      },
+      {
+        "name": "Running Shoes",
+        "category": "Sports",
+        "price": 90.00,
+        "quantity": 35
+      },
+      {
+        "name": "Dumbbell Set",
+        "category": "Sports",
+        "price": 120.00,
+        "quantity": 15
+      },
+      {
+        "name": "Garden Hose",
+        "category": "Outdoor",
+        "price": 35.00,
+        "quantity": 20
+      },
+      {
+        "name": "Camping Tent",
+        "category": "Outdoor",
+        "price": 150.00,
+        "quantity": 8
+      },
+      {
+        "name": "BBQ Grill",
+        "category": "Outdoor",
+        "price": 250.00,
+        "quantity": 5
+      },
+      {
+        "name": "Bicycle",
+        "category": "Outdoor",
+        "price": 400.00,
+        "quantity": 10
+      },
+      {
+        "name": "Flashlight",
+        "category": "Outdoor",
+        "price": 20.00,
+        "quantity": 40
+      }
+    ]
+  }
+  
