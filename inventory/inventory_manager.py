@@ -10,11 +10,15 @@ init(autoreset=True)  # Ensures colors reset after each print
 class InventoryManager:
     """Manages the inventory of products"""
 
-    def __init__(self, filename="inventory.json"):
+    def __init__(self, filename="inventory.json", test_mode=False):
         """Initialize inventory and load existing data from JSON."""
         self.filename = filename
         self.products = {}  
-        self.load_inventory() 
+        self.test_mode = test_mode  # New parameter to avoid auto-saving in tests
+        self.load_inventory()
+
+    def clear_inventory(self):
+        self.products.clear()    
 
     def load_inventory(self):
         """Loads inventory from a JSON file. If empty, preloads default products."""
@@ -113,27 +117,25 @@ class InventoryManager:
         return total_quantity
 
     def save_inventory(self):
-        """Saves the current inventory to a JSON file."""
-        with open(self.filename, "w") as file:
-            json.dump(
-                {"products": [vars(product) for product in self.products.values()]},
-                file,
-                indent=4,
-            )
-        print(f"✅ Inventory saved to {self.filename}")
+        """Saves the current inventory to a JSON file, unless in test mode."""
+        if not self.test_mode:  # Skip saving if we're in test mode
+            with open(self.filename, "w") as file:
+                json.dump(
+                    {"products": [vars(product) for product in self.products.values()]},
+                    file,
+                    indent=4,
+                )
+            print(f"✅ Inventory saved to {self.filename}")
 
     def add_product(self, name, category, price, quantity):
-        """Add a new product or update quantity if it already exists."""
+        """Add a new product or raise an error if it already exists."""
         if name in self.products:
-            print(f"⚠️ Product '{name}' already exists. Increasing quantity by {quantity}.")
-            self.products[name].quantity += quantity  # Increment quantity
-        else:
-            self.products[name] = Product(name, category, price, quantity)
-
-        self.save_inventory()  # ✅ Save after adding
+            raise ValueError(f"⚠️ Product '{name}' already exists.")
+        self.products[name] = Product(name, category, price, quantity)
+        self.save_inventory() # Save after adding
 
     def remove_product(self, name: str):
-        """Removes a product from the inventory (case-insensitive)."""
+        """Removes a product from the inventory (case-insensitive) or raises ValueError if not found."""
         name = name.lower()  # Convert input to lowercase
         found_product = None
 
@@ -147,7 +149,8 @@ class InventoryManager:
             self.save_inventory()  # ✅ Save after removal
             print(f"✅ Product '{found_product}' removed successfully.")
         else:
-            print(f"❌ Product '{name}' does not exist.")
+            raise ValueError(f"❌ Product '{name}' does not exist.")
+
 
 
     def update_quantity(self, name: str, new_quantity: int):
@@ -202,3 +205,4 @@ class InventoryManager:
         print("\n📦 Inventory:")
         print(table)
 
+# python3 -m unittest discover -s tests

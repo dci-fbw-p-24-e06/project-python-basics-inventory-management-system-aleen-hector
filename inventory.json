@@ -64,7 +64,7 @@
             "name": "Gaming Mouse",
             "category": "Electronics",
             "price": 59.99,
-            "quantity": 20
+            "quantity": 25
         },
         {
             "name": "Office Chair",
@@ -133,12 +133,6 @@
             "quantity": 5
         },
         {
-            "name": "Speakers",
-            "category": "Electronics",
-            "price": 129.99,
-            "quantity": 14
-        },
-        {
             "name": "Fitness Tracker",
             "category": "Electronics",
             "price": 149.99,
@@ -155,6 +149,24 @@
             "category": "Electronics",
             "price": 499.0,
             "quantity": 8
+        },
+        {
+            "name": "Keyboard",
+            "category": "Electronics",
+            "price": 100,
+            "quantity": 8
+        },
+        {
+            "name": "Mouse",
+            "category": "Electronics",
+            "price": 50,
+            "quantity": 10
+        },
+        {
+            "name": "Webcam",
+            "category": "Electronics",
+            "price": 75,
+            "quantity": 12
         }
     ]
 }
