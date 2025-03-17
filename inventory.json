@@ -139,16 +139,10 @@
             "quantity": 8
         },
         {
-            "name": "Sofa",
-            "category": "Home Essentials",
-            "price": 999.99,
-            "quantity": 3
-        },
-        {
             "name": "Apple Watch",
             "category": "Electronics",
             "price": 499.0,
-            "quantity": 8
+            "quantity": 3
         },
         {
             "name": "Keyboard",
@@ -167,6 +161,18 @@
             "category": "Electronics",
             "price": 75,
             "quantity": 12
+        },
+        {
+            "name": "Iphone",
+            "category": "Electronics",
+            "price": 1499.0,
+            "quantity": 10
+        },
+        {
+            "name": "Sofa",
+            "category": "Home Essentials",
+            "price": 1790.0,
+            "quantity": 3
         }
     ]
 }

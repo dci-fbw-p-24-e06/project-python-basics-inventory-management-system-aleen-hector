@@ -1,9 +1,16 @@
 import json
 import os
-from typing import Optional
 from inventory.product import Product
 from prettytable import PrettyTable
 from colorama import Fore, Style, init
+import time
+from rich.console import Console
+from rich.table import Table
+from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
+from rich.style import Style
+
+console = Console()
+
 
 init(autoreset=True)  # Ensures colors reset after each print
 
@@ -128,14 +135,38 @@ class InventoryManager:
             print(f"✅ Inventory saved to {self.filename}")
 
     def add_product(self, name, category, price, quantity):
-        """Add a new product or raise an error if it already exists."""
+        """Add a new product or update quantity if it already exists."""
         if name in self.products:
-            raise ValueError(f"⚠️ Product '{name}' already exists.")
-        self.products[name] = Product(name, category, price, quantity)
-        self.save_inventory() # Save after adding
+            print(f"⚠️ Product '{name}' already exists with quantity {self.products[name].quantity}.")
+            choice = input("Do you want to update the quantity? (yes/no): ").strip().lower()
+            
+            if choice in ['y', 'yes']:
+                new_quantity = input("Enter new quantity (additive, e.g., +5 or -3): ").strip()
+                
+                if new_quantity.startswith('+') or new_quantity.startswith('-'):
+                    try:
+                        self.products[name].quantity += int(new_quantity)
+                        print(f"✅ Updated '{name}' quantity to {self.products[name].quantity}.")
+                    except ValueError:
+                        print("❌ Invalid input. Quantity remains unchanged.")
+                else:
+                    try:
+                        self.products[name].quantity = int(new_quantity)
+                        print(f"✅ Set '{name}' quantity to {self.products[name].quantity}.")
+                    except ValueError:
+                        print("❌ Invalid input. Quantity remains unchanged.")
+                
+                self.save_inventory()  # Save the updated quantity
+            else:
+                print("ℹ️ No changes made to the existing product.")
+        else:
+            self.products[name] = Product(name, category, price, quantity)
+            self.save_inventory()  # Save after adding
+            print(f"✅ Added new product '{name}' with quantity {quantity}.")
+
 
     def remove_product(self, name: str):
-        """Removes a product from the inventory (case-insensitive) or raises ValueError if not found."""
+        """Removes a product from the inventory (case-insensitive) or prints a message if not found."""
         name = name.lower()  # Convert input to lowercase
         found_product = None
 
@@ -149,60 +180,101 @@ class InventoryManager:
             self.save_inventory()  # ✅ Save after removal
             print(f"✅ Product '{found_product}' removed successfully.")
         else:
-            raise ValueError(f"❌ Product '{name}' does not exist.")
+            print(f"ℹ️ Product '{name}' does not exist. Nothing to remove.")  # Instead of raising an error
 
 
 
-    def update_quantity(self, name: str, new_quantity: int):
-        """Updates the quantity of a product in the inventory."""
-        if name not in self.products:
-            raise ValueError(f"Product '{name}' does not exist.")
-        self.products[name].quantity = new_quantity
-        self.save_inventory()
+    def update_quantity(self, name, new_quantity):
+        """Update the quantity of an existing product in a case-insensitive manner.
+        In test mode, raises a ValueError if the product does not exist."""
+        # Find the product key using a case-insensitive search.
+        product_key = None
+        for key in self.products:
+            if key.lower() == name.lower():
+                product_key = key
+                break
 
-    def search_product(self, name: str):
-        """Search for a product by name (case-insensitive)."""
-        name = name.lower()
-        results = [
-            product
-            for product in self.products.values()
-            if product.name.lower() == name
-            ]
-
-        if results:
-            for product in results:
-                print(f"✅ Found: {product.get_product_info()}")
-            return results
+        if product_key is not None:
+            try:
+                new_quantity = int(new_quantity)
+                self.products[product_key].quantity = new_quantity
+                self.save_inventory()
+                print(f"✅ Updated '{product_key}' quantity to {new_quantity}.")
+            except ValueError:
+                print("❌ Invalid quantity. Please enter a valid number.")
         else:
-            print(f"❌ No product found with name '{name}'.")
-            return []
-    
+            # In test mode, immediately raise a ValueError.
+            if self.test_mode:
+                raise ValueError(f"Product '{name}' does not exist.")
+            else:
+                print(f"ℹ️ Product '{name}' does not exist. Nothing to update.")
+                choice = input("Do you want to add the product to your inventory? (yes/no): ").strip().lower()
+                if choice in ['y', 'yes']:
+                    category = input("Enter category: ").strip()
+                    price = float(input("Enter price (€): ").strip())
+                    try:
+                        new_quantity = int(new_quantity)
+                    except ValueError:
+                        print("❌ Invalid quantity. Please enter a valid number.")
+                        return
+                    # Add the new product using the provided name.
+                    self.products[name] = Product(name, category, price, new_quantity)
+                    self.save_inventory()
+                    print(f"✅ Added new product '{name}' with quantity {new_quantity}.")
+
+
+    def search_product(self, name):
+        """Search for a product by name with a loading animation and low-stock warning.
+        Always returns a list of found products (even if empty)."""
+        name = name.lower()
+        found_products = []
+
+        # Animated progress bar
+        with Progress(
+            SpinnerColumn(),        # Loading spinner
+            TextColumn("[cyan]Searching...[/]"),  # Text animation
+            BarColumn(),            # Loading bar
+            transient=True          # Hides after completion
+        ) as progress:
+            task = progress.add_task("", total=100)
+            for _ in range(10):  # Simulating a delay
+                time.sleep(0.1)
+                progress.update(task, advance=10)
+            
+            # Perform case-insensitive search
+            for product in self.products.values():
+                if name in product.name.lower():
+                    found_products.append(product)
+
+        # Display results
+        if found_products:
+            console.print(f"✅ [green]Found {len(found_products)} result(s):[/]")
+            for product in found_products:
+                stock_warning = ""
+                if product.quantity < 3:
+                    stock_warning = " ⚠️ [bold red](Low stock!)[/]"
+                console.print(
+                    f"📦 [cyan]{product.name}[/] - 🏷️ [yellow]{product.category}[/] - "
+                    f"💰 [green]{product.price}€[/] - 📦 [blue]{product.quantity} in stock[/]{stock_warning}"
+                )
+        else:
+            console.print(f"❌ [red]No product found with name '{name}'.[/]")
+
+        # Always return the list (even if empty)
+        return found_products
+
+
 
     def display_inventory(self):
-        """Displays inventory using PrettyTable with colors."""
-        if not self.products:
-            print(Fore.RED + "📦 Inventory is empty.")
-            return
+        """Display inventory with Rich tables."""
+        table = Table(title="📦 Inventory", show_lines=True)
 
-        table = PrettyTable(["Product Name", "Category", "Price (€)", "Quantity"])
-        
-        category_colors = {
-            "Electronics": Fore.CYAN,
-            "Clothing": Fore.GREEN,
-            "Groceries": Fore.YELLOW,
-            "Home Essentials": Fore.MAGENTA
-        }
+        table.add_column("Product Name", style="cyan")
+        table.add_column("Category", style="magenta")
+        table.add_column("Price (€)", style="green")
+        table.add_column("Quantity", style="yellow")
 
         for product in self.products.values():
-            color = category_colors.get(product.category, Fore.WHITE)  # Default to white
-            table.add_row([
-                color + product.name + Style.RESET_ALL,
-                color + product.category + Style.RESET_ALL,
-                color + f"{product.price:.2f}€" + Style.RESET_ALL,
-                color + str(product.quantity) + Style.RESET_ALL
-            ])
+            table.add_row(product.name, product.category, f"{product.price:.2f}€", str(product.quantity))
 
-        print("\n📦 Inventory:")
-        print(table)
-
-# python3 -m unittest discover -s tests
+        console.print(table)
