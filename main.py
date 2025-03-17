@@ -5,7 +5,7 @@ def main():
     inventory = InventoryManager()  # Load inventory from JSON
 
     while True:
-        print("\n📦 Inventory Management System")
+        print("\n🏬 Inventory Management System")
         print("1️⃣ Add Product")
         print("2️⃣ Remove Product")
         print("3️⃣ Update Product Quantity")
@@ -16,7 +16,7 @@ def main():
         print("8️⃣ Show Total Inventory Quantity")
         print("9️⃣ Exit")
         
-        choice = input("🔹 Choose an option (1-9): ")
+        choice = input("\n❇️  Choose an option (1-9): ")
 
         if choice == "1":
             name = input("Enter product name: ").strip()
@@ -55,7 +55,7 @@ def main():
             print(f"📦 Total Inventory Quantity: {total_quantity} items")
 
         elif choice == "9":
-            print("🔴 Exiting... Inventory saved.")
+            print("🚪 Exiting... Inventory saved.")
             inventory.save_inventory()  # Save inventory before exiting
             break
 

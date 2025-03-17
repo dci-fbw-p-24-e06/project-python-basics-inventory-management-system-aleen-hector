@@ -173,6 +173,12 @@
             "category": "Home Essentials",
             "price": 1790.0,
             "quantity": 3
+        },
+        {
+            "name": "Shampoo",
+            "category": "Cosmetics",
+            "price": 8.9,
+            "quantity": 25
         }
     ]
 }

@@ -14,6 +14,7 @@ console = Console()
 
 init(autoreset=True)  # Ensures colors reset after each print
 
+
 class InventoryManager:
     """Manages the inventory of products"""
 
@@ -25,14 +26,14 @@ class InventoryManager:
         self.load_inventory()
 
     def clear_inventory(self):
-        self.products.clear()    
+        self.products.clear()
 
     def load_inventory(self):
         """Loads inventory from a JSON file. If empty, preloads default products."""
         if not os.path.exists(self.filename):
             print(f"⚠️ {self.filename} not found. Initializing with default products.")
             self.preload_default_products()
-            return  
+            return
 
         try:
             with open(self.filename, "r") as file:
@@ -177,7 +178,7 @@ class InventoryManager:
 
         if found_product:
             del self.products[found_product]
-            self.save_inventory()  # ✅ Save after removal
+            self.save_inventory()  # Save after removal
             print(f"✅ Product '{found_product}' removed successfully.")
         else:
             print(f"ℹ️ Product '{name}' does not exist. Nothing to remove.")  # Instead of raising an error
@@ -207,7 +208,7 @@ class InventoryManager:
             if self.test_mode:
                 raise ValueError(f"Product '{name}' does not exist.")
             else:
-                print(f"ℹ️ Product '{name}' does not exist. Nothing to update.")
+                print(f"🙋 Product '{name}' does not exist. Nothing to update.")
                 choice = input("Do you want to add the product to your inventory? (yes/no): ").strip().lower()
                 if choice in ['y', 'yes']:
                     category = input("Enter category: ").strip()
@@ -267,7 +268,7 @@ class InventoryManager:
 
     def display_inventory(self):
         """Display inventory with Rich tables."""
-        table = Table(title="📦 Inventory", show_lines=True)
+        table = Table(title="💁 Inventory", show_lines=True)
 
         table.add_column("Product Name", style="cyan")
         table.add_column("Category", style="magenta")
